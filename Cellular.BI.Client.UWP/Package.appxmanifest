@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="21be582c-5622-4e6a-a62c-fd3b21eac883"
+    Name="b482e9fa-265a-4051-803a-b6dd7e9bf8af"
     Publisher="CN=ניר לונדון"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="21be582c-5622-4e6a-a62c-fd3b21eac883" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="b482e9fa-265a-4051-803a-b6dd7e9bf8af" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Cellular.CRM.Client.UWP</DisplayName>
+    <DisplayName>Cellular.BI.Client.UWP</DisplayName>
     <PublisherDisplayName>ניר לונדון</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="Cellular.CRM.Client.UWP.App">
+      EntryPoint="Cellular.BI.Client.UWP.App">
       <uap:VisualElements
-        DisplayName="Cellular.CRM.Client.UWP"
+        DisplayName="Cellular.BI.Client.UWP"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Cellular.CRM.Client.UWP"
+        Description="Cellular.BI.Client.UWP"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

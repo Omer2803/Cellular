@@ -5,13 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <ProjectReference Include="..\Cellular.Common\Cellular.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CRM\" />
-    <Folder Include="Invoices\" />
-    <Folder Include="BI\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>
