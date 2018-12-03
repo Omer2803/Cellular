@@ -1,5 +1,6 @@
 ﻿using Cellular.Common.CRM;
 using SimpleInjector;
+
 namespace Cellular.CRM.BL
 {
     public class IoCManager
@@ -15,6 +16,7 @@ namespace Cellular.CRM.BL
             container.Register<IClientsManager>(() => new ClientsManager(dalIoc.GetInstanceOf<IClientsRepository>()));
             container.Register<ILinesManager>(() => new LinesManager(dalIoc.GetInstanceOf<ILinesPackagesRepository>()));
             container.Register<IAuthenticator, Authenticator>();
+            container.Register<>
 
             container.Verify();
         }

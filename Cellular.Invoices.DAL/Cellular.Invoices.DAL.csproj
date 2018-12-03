@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Invoices\InvoicesRepository.cs" />
+    <Compile Include="OptimalPackage\OptimalPackageRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simulator\SimulatorRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cellular.Common\Cellular.Common.csproj">
@@ -53,5 +56,6 @@
       <Name>Cellular.MainDal</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

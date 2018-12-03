@@ -1,11 +1,9 @@
 ﻿using Cellular.Common.Invoices;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cellular.Invoices.BL.Invoices
 {
-    class Invoice
+    class Invoice : IInvoice
     {
         private readonly SingleLineInvoiceData[] linesData;
 
