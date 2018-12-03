@@ -10,9 +10,16 @@ namespace Cellular.CRM.BL
 {
     public class Authenticator : IAuthenticator
     {
-        public Employee Login(string username, string password)
+        private readonly ILoginDal _loginDal;
+
+        public Authenticator(ILoginDal loginDal)
         {
-            throw new NotImplementedException();
+            this._loginDal = loginDal;
+        }
+
+        public Employee Login(int Id, string password)
+        {
+            return _loginDal.Login(Id, password);
         }
 
         public void Logout(int employeeId)

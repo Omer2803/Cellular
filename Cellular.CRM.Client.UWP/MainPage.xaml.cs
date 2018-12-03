@@ -22,9 +22,14 @@ namespace Cellular.CRM.Client.UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public LoginViewModel LoginViewModel;
         public MainPage()
         {
             this.InitializeComponent();
+            LoginViewModel = new LoginViewModel();
+            this.DataContext = LoginViewModel;
         }
+
+        
     }
 }

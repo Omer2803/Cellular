@@ -18,6 +18,7 @@ namespace Cellular.CRM.DAL
 
             container.Register<IClientsRepository, ClientsRepository>();
             container.Register<ILinesPackagesRepository, LinesPackagesRepository>();
+            container.Register<ILoginDal, LoginDal>();
 
             container.Verify();
         }
