@@ -10,26 +10,26 @@ namespace Cellular.CRM.BL
 {
     class ClientsManager : IClientsManager
     {
-        private readonly IClientsRepository clientsRepository;
+        private readonly IClientsRepository _clientsRepository;
 
         public ClientsManager(IClientsRepository clientsRepository)
         {
-            this.clientsRepository = clientsRepository;
+            this._clientsRepository = clientsRepository;
         }
 
         public void AddClient(Client client)
         {
-            throw new NotImplementedException();
+            _clientsRepository.AddClient(client);
         }
 
-        public void DeleteClient(int ClientId)
+        public void DeleteClient(int clientId)
         {
-            throw new NotImplementedException();
+            _clientsRepository.DeleteClient(clientId);
         }
 
         public void EditClient(Client client)
         {
-            throw new NotImplementedException();
+            _clientsRepository.EditClient(client);
         }
     }
 }

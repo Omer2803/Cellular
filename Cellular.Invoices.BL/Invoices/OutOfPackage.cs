@@ -18,7 +18,7 @@ namespace Cellular.Invoices.BL.Invoices
         {
             get
             {
-
+                throw new Exception();
             }
         }
 
@@ -26,6 +26,7 @@ namespace Cellular.Invoices.BL.Invoices
         {
             get
             {
+                throw new Exception();
             }
         }
 
@@ -33,6 +34,7 @@ namespace Cellular.Invoices.BL.Invoices
         {
             get
             {
+                throw new Exception();
             }
         }
 
