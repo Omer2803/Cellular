@@ -1,10 +1,6 @@
 ﻿using Cellular.Common.Invoices;
 using Cellular.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Cellular.MainDal;
 
 namespace Cellular.Invoices.DAL.Simulator
 {
@@ -12,12 +8,20 @@ namespace Cellular.Invoices.DAL.Simulator
     {
         public void AddCall(Call call)
         {
-            throw new NotImplementedException();
+            using (var context = new CellularDbContext())
+            {
+                context.Calls.Add(call);
+                context.SaveChanges();
+            }
         }
 
         public void AddSMS(SMS sms)
         {
-            throw new NotImplementedException();
+            using (var context = new CellularDbContext())
+            {
+                context.SMSes.Add(sms);
+                context.SaveChanges();
+            }
         }
     }
 }

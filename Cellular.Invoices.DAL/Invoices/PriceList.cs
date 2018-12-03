@@ -1,10 +1,6 @@
 ﻿using Cellular.Common.Invoices;
 using Cellular.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Cellular.MainDal;
 
 namespace Cellular.Invoices.DAL.Invoices
 {
@@ -12,12 +8,14 @@ namespace Cellular.Invoices.DAL.Invoices
     {
         public double GetCallMinuetPrice(ClientTypeEnum clientType)
         {
-            throw new NotImplementedException();
+            using (var context = new CellularDbContext())
+                return context.ClientTypes.Find(clientType).CallMinutesPrice;
         }
 
         public double GetSMSPrice(ClientTypeEnum clientType)
         {
-            throw new NotImplementedException();
+            using (var context = new CellularDbContext())
+                return context.ClientTypes.Find(clientType).SmsPrice;
         }
     }
 }
