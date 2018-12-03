@@ -14,7 +14,7 @@ namespace Cellular.CRM.BL
 
             container.Register<IClientsManager>(() => new ClientsManager(dalIoc.GetInstanceOf<IClientsRepository>()));
             container.Register<ILinesManager>(() => new LinesManager(dalIoc.GetInstanceOf<ILinesPackagesRepository>()));
-            container.Register<IAuthenticator, Authenticator>();
+            container.Register<IAuthenticator>(() => new Authenticator(dalIoc.GetInstanceOf<ILoginDal>()));
 
             container.Verify();
         }

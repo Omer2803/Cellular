@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Cellular.Common.Invoices
 {
-    public interface IInvoicesProducer
-    {
-        invoice Createinvoice(int clientId, DateTime from, DateTime until);
-    }
+    //public interface IInvoicesProducer
+    //{
+    //   Invoice Createinvoice(int clientId, DateTime from, DateTime until);
+    //}
 }

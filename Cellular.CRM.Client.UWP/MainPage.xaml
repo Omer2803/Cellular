@@ -8,7 +8,19 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="ID"/>
+            <TextBox Width="100" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Password"/>
+            <TextBox Width="100" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Login" Click="{x:Bind LoginViewModel.Login}">
+            </Button>
+            
+        </StackPanel>
+    </StackPanel>
 </Page>
