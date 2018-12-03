@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cellular.Common.Models
 {
@@ -10,5 +8,6 @@ namespace Cellular.Common.Models
         public int ClientId { get; set; }
         public Client Client { get; set; }
         public DateTime Date { get; set; }
+        public double TotalPrice { get; set; }
     }
 }

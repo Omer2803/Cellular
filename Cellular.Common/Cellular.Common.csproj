@@ -8,10 +8,4 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CRM\" />
-    <Folder Include="Invoices\" />
-    <Folder Include="BI\" />
-  </ItemGroup>
-
 </Project>

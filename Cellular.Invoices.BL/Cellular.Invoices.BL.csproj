@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Invoices\Invoice.cs" />
+    <Compile Include="Invoices\OutOfPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +56,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Invoices\" />
     <Folder Include="OptimalPackage\" />
     <Folder Include="Simulator\" />
   </ItemGroup>
