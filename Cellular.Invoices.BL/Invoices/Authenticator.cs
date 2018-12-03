@@ -9,6 +9,13 @@ namespace Cellular.Invoices.BL.Invoices
 {
     public class Authenticator : IAuthenticator
     {
+        private readonly IDALAuthenticator dALAuthenticator;
+
+        public Authenticator(IDALAuthenticator dALAuthenticator)
+        {
+            this.dALAuthenticator = dALAuthenticator;
+        }
+
         public object Login(int id, string password)
         {
             throw new NotImplementedException();
