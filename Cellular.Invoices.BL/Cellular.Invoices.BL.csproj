@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=4.4.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.4.2\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,7 +48,10 @@
     <Compile Include="Invoices\Invoice.cs" />
     <Compile Include="Invoices\InvoicesProducer.cs" />
     <Compile Include="Invoices\OutOfPackage.cs" />
+    <Compile Include="IoCManager.cs" />
+    <Compile Include="OptimalPackage\OptimalPackageCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simulator\Simulator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cellular.Common\Cellular.Common.csproj">
@@ -57,9 +63,9 @@
       <Name>Cellular.Invoices.DAL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="OptimalPackage\" />
-    <Folder Include="Simulator\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

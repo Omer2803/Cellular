@@ -1,5 +1,6 @@
 ﻿using Cellular.Common.BI;
 using Cellular.Common.CRM;
+using Cellular.Common.Invoices;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using System;
@@ -19,6 +20,7 @@ namespace Cellular.Server
 
             CRM.BL.IoCManager crmIoc = new CRM.BL.IoCManager();
             BI.BL.IoCManager biIoc = new BI.BL.IoCManager();
+            Invoices.BL.IoCManager invoicesIoc = new Invoices.BL.IoCManager();
 
             Container container = new Container();
 
@@ -26,7 +28,12 @@ namespace Cellular.Server
 
             container.Register<IClientsManager>(() => crmIoc.GetInstanceOf<IClientsManager>());
             container.Register<ILinesManager>(() => crmIoc.GetInstanceOf<ILinesManager>());
-            container.Register<IAuthenticator>(() => crmIoc.GetInstanceOf<IAuthenticator>());
+            container.Register<Common.CRM.IAuthenticator>(() => crmIoc.GetInstanceOf<Common.CRM.IAuthenticator>());
+
+            container.Register<IInvoicesProducer>(() => invoicesIoc.GetInstanceOf<IInvoicesProducer>());
+            container.Register<Common.Invoices.IAuthenticator>(() => invoicesIoc.GetInstanceOf<Common.Invoices.IAuthenticator>());
+            container.Register<IOptimalPackageCalculator>(() => invoicesIoc.GetInstanceOf<IOptimalPackageCalculator>());
+            container.Register<ISimulator>(() => invoicesIoc.GetInstanceOf<ISimulator>());
 
             container.Verify();
 

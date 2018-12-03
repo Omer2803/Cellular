@@ -1,24 +1,25 @@
 ﻿using Cellular.Common.Invoices;
+using Cellular.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cellular.Invoices.BL.Invoices
+namespace Cellular.Invoices.BL.OptimalPackage
 {
-    public class InvoicesProducer : IInvoicesProducer
+    public class OptimalPackageCalculator : IOptimalPackageCalculator
     {
-        private readonly IInvoicesRepository repository;
+        private readonly IOptimalPackageRepository repository;
         private readonly IPriceList priceList;
 
-        public InvoicesProducer(IInvoicesRepository repository, IPriceList priceList)
+        public OptimalPackageCalculator(IOptimalPackageRepository repository, IPriceList priceList)
         {
             this.repository = repository;
             this.priceList = priceList;
         }
 
-        public IInvoice Createinvoice(int clientId, DateTime from, DateTime until)
+        public Package[] GetOptimalPackagesFor(string lineNumber)
         {
             throw new NotImplementedException();
         }
