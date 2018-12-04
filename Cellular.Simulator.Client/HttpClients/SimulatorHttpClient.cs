@@ -1,8 +1,6 @@
 ﻿using Cellular.Common.Models;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cellular.Simulator.Client.HttpClients
@@ -29,18 +27,18 @@ namespace Cellular.Simulator.Client.HttpClients
         {
             using (var client = new HttpClient { BaseAddress = uri })
             {
-                var response = await client.PostAsJsonAsync($"api/simulator/addcalls", call);
+                var response = await client.PostAsJsonAsync($"api/simulator/addcall", call);
 
                 if (!response.IsSuccessStatusCode)
                     throw new Exception("Could not post the call");
             }
         }
 
-        public async Task PostCall(SMS sms)
+        public async Task PostSMS(SMS sms)
         {
             using (var client = new HttpClient { BaseAddress = uri })
             {
-                var response = await client.PostAsJsonAsync($"api/simulator/addcalls. ", sms);
+                var response = await client.PostAsJsonAsync($"api/simulator/addsms. ", sms);
 
                 if (!response.IsSuccessStatusCode)
                     throw new Exception("Could not post the SMS. ");

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{54C2882E-7366-4FAA-8EAE-7CF428B2DB3A}</ProjectGuid>
+    <ProjectGuid>{799396D4-EAAB-4694-B792-2F13AD548092}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cellular.Simulator.Client.UWP</RootNamespace>
@@ -129,8 +129,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SimulatorView.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

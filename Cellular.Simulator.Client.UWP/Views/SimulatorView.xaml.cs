@@ -1,5 +1,4 @@
-﻿using Cellular.Simulator.Client;
-using Cellular.Simulator.Client.ViewModels;
+﻿using Cellular.Simulator.Client.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,20 +21,15 @@ namespace Cellular.Simulator.Client.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SimulatorView : Page, INavigateable
+    public sealed partial class SimulatorView : Page
     {
         public SimulatorViewModel ViewModel { get; set; }
 
         public SimulatorView()
         {
-            ViewModels = new SimulatorViewModel(this);
+            ViewModel = new SimulatorViewModel();
 
             this.InitializeComponent();
-        }
-
-        public void NavigateTo(Type ViewType)
-        {
-            Frame.Navigate(ViewType);
         }
     }
 }

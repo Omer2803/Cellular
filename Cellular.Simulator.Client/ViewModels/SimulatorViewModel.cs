@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Cellular.Simulator.Client.ViewModels
 {
@@ -12,11 +13,13 @@ namespace Cellular.Simulator.Client.ViewModels
     {
         //private readonly INavigateable view;
         private readonly SimulatorHttpClient httpClient;
+        private readonly Random durationGenerator;
 
         public SimulatorViewModel(/*INavigateable view*/)
         {
             //this.view = view;
             httpClient = new SimulatorHttpClient();
+            durationGenerator = new Random();
         }
 
         private int _clientId;
@@ -51,16 +54,56 @@ namespace Cellular.Simulator.Client.ViewModels
         }
 
 
-        public void Simulate()
+        private string selectedNumber;
+        public string SelectedNumber
+        {
+            get { return selectedNumber; }
+            set { selectedNumber = value; }
+        }
+
+        private double minDuration;
+        public double MinDuration
+        {
+            get => minDuration;
+            set
+            {
+                minDuration = value;
+                Notify();
+            }
+        }
+
+        private double maxDuration;
+        public double MaxDuration
+        {
+            get => maxDuration;
+            set
+            {
+                maxDuration = value;
+                Notify();
+            }
+        }
+
+
+        public async Task Simulate()
         {
             switch (isCall)
             {
                 case true:
-                    httpClient.PostCall(new Call
+                    await httpClient.PostCall(new Call
                     {
-                        CallerNumber =
+                        CallerNumber = SelectedNumber,
+                        Duration = TimeSpan.FromMinutes((durationGenerator.Next() / (double)int.MaxValue) * (maxDuration - minDuration) + minDuration),
+                        StartTime = DateTime.Now
                     });
-                    
+                    return;
+                case false:
+                    await httpClient.PostSMS(new SMS
+                    {
+                        SenderNumber = selectedNumber,
+                        SendingTime = DateTime.Now,                        
+                    });
+                    return;
+                default: throw new Exception();
             }
         }
 
@@ -68,12 +111,6 @@ namespace Cellular.Simulator.Client.ViewModels
         private void Notify(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        enum Mode
-        {
-            SMS,
-            Call
         }
     }
 }
