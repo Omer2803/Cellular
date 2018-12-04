@@ -1,5 +1,6 @@
 ﻿using Cellular.Common.CRM;
 using Cellular.Common.Models;
+using Cellular.MainDal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,48 @@ namespace Cellular.CRM.DAL
     {
         public void AddClient(Client client)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                db.Clients.Add(client);
+                db.SaveChanges();
+            }
         }
 
         public void DeleteClient(int clientId)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                var clientRemoved = db.Clients.FirstOrDefault(c => c.Id == clientId);
+                db.Clients.Remove(clientRemoved);
+                db.SaveChanges();
+            }
         }
 
         public void EditClient(Client client)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                var clientEdited = db.Clients.FirstOrDefault(c => c.Id == client.Id);
+                clientEdited = client;
+                db.Entry(client).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public List<Client> GetAllClients()
+        {
+            using (var db = new CellularDbContext())
+            {
+                return db.Clients.ToList();
+            }
         }
 
         public Client GetClientById(int clientId)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                return db.Clients.FirstOrDefault(c => c.Id == clientId);
+            }
         }
     }
 }

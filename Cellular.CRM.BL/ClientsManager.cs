@@ -8,28 +8,38 @@ using System.Threading.Tasks;
 
 namespace Cellular.CRM.BL
 {
-    class ClientsManager : IClientsManager
+    public class ClientsManager : IClientsManager
     {
-        private readonly IClientsRepository clientsRepository;
+        private readonly IClientsRepository _clientsRepository;
 
         public ClientsManager(IClientsRepository clientsRepository)
         {
-            this.clientsRepository = clientsRepository;
+            this._clientsRepository = clientsRepository;
         }
 
         public void AddClient(Client client)
         {
-            throw new NotImplementedException();
+            _clientsRepository.AddClient(client);
         }
 
-        public void DeleteClient(int ClientId)
+        public void DeleteClient(int clientId)
         {
-            throw new NotImplementedException();
+            _clientsRepository.DeleteClient(clientId);
         }
 
         public void EditClient(Client client)
         {
-            throw new NotImplementedException();
+            _clientsRepository.EditClient(client);
+        }
+
+        public List<Client> GetAllClients()
+        {
+            return _clientsRepository.GetAllClients();
+        }
+
+        public Client GetClientById(int id)
+        {
+            return _clientsRepository.GetClientById(id);
         }
     }
 }

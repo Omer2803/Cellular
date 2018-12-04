@@ -1,4 +1,5 @@
-﻿using Cellular.Common.Models;
+﻿using System.Collections.Generic;
+using Cellular.Common.Models;
 
 namespace Cellular.Common.CRM
 {
@@ -9,5 +10,7 @@ namespace Cellular.Common.CRM
         void EditClient(Client client);
 
         void DeleteClient(int ClientId);
+        Client GetClientById(int id);
+        List<Client> GetAllClients();
     }
 }

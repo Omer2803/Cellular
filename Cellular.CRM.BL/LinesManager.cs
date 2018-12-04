@@ -10,26 +10,26 @@ namespace Cellular.CRM.BL
 {
     public class LinesManager : ILinesManager
     {
-        public LinesManager(ILinesPackagesRepository repository)
-        {
-            Repository = repository;
-        }
+        private readonly ILinesPackagesRepository _linesPackagesRepository;
 
-        public ILinesPackagesRepository Repository { get; }
+        public LinesManager(ILinesPackagesRepository  linesPackagesRepository)
+        {
+            this._linesPackagesRepository = linesPackagesRepository;
+        }
 
         public void AddLine(int clientId, Line line)
         {
-            throw new NotImplementedException();
+            _linesPackagesRepository.AddLine(line);
         }
 
         public void AddPackage(Package package)
         {
-            throw new NotImplementedException();
+            _linesPackagesRepository.AddPackage(package);
         }
 
-        public void EditPackage(Package package)
+        public Package EditPackage(Package package)
         {
-            throw new NotImplementedException();
+            return _linesPackagesRepository.EditPackage(package);
         }
     }
 }
