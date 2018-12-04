@@ -8,6 +8,6 @@ namespace Cellular.Common.CRM
 
         void AddPackage(Package package);
 
-        void EditPackage(Package package);
+        Package EditPackage(Package package);
     }
 }

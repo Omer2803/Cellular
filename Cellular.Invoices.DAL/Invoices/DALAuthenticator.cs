@@ -9,6 +9,9 @@ namespace Cellular.Invoices.DAL.Invoices
 {
     public class DALAuthenticator : IDALAuthenticator
     {
-
+        public object GetClientOrEmployee(int id, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

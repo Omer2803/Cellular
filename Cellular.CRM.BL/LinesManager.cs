@@ -24,12 +24,12 @@ namespace Cellular.CRM.BL
 
         public void AddPackage(Package package)
         {
-            throw new NotImplementedException();
+            _linesPackagesRepository.AddPackage(package);
         }
 
-        public void EditPackage(Package package)
+        public Package EditPackage(Package package)
         {
-            throw new NotImplementedException();
+            return _linesPackagesRepository.EditPackage(package);
         }
     }
 }

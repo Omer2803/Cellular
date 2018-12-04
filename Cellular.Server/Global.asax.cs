@@ -6,6 +6,7 @@ using SimpleInjector.Integration.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
@@ -41,6 +42,9 @@ namespace Cellular.Server
 
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
+
+           // GlobalConfiguration.Configuration.Formatters.Clear();
+           // GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());
         }
     }
 }

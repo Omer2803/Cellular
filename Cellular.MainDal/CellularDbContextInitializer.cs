@@ -14,6 +14,7 @@ namespace Cellular.MainDal
         {
             var emp = new Employee()
             {
+                Id = 3121,
                 FirstName = "Omer",
                 LastName = "Cohen",
                 Password = "1",

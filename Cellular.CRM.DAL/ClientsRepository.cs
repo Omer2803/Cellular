@@ -41,6 +41,14 @@ namespace Cellular.CRM.DAL
             }
         }
 
+        public List<Client> GetAllClients()
+        {
+            using (var db = new CellularDbContext())
+            {
+                return db.Clients.ToList();
+            }
+        }
+
         public Client GetClientById(int clientId)
         {
             using (var db = new CellularDbContext())

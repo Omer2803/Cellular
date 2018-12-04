@@ -30,12 +30,13 @@ namespace Cellular.Server.Controllers
                 return BadRequest();
             }
         }
-
-        public IHttpActionResult AddPackage(Package package)
+       // [HttpPost]
+        [Route(Name = "AddPackage")]
+        public IHttpActionResult AddPackage([FromBody]Package package)
         {
             try
             {
-                _linesManager.AddLine(clientId, line);
+                _linesManager.AddPackage(package);
                 return Ok();
             }
             catch (Exception)
@@ -48,7 +49,7 @@ namespace Cellular.Server.Controllers
         {
             try
             {
-                _linesManager.AddLine(clientId, line);
+               var packagEdited = _linesManager.EditPackage(package);
                 return Ok();
             }
             catch (Exception)

@@ -15,5 +15,6 @@ namespace Cellular.Common.Models
         public Employee Registrator { get; set; }
         public string Password { get; set; }
         public DateTime RegisterationDate { get; set; }
+
     }
 }

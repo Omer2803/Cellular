@@ -32,6 +32,11 @@ namespace Cellular.CRM.BL
             _clientsRepository.EditClient(client);
         }
 
+        public List<Client> GetAllClients()
+        {
+            return _clientsRepository.GetAllClients();
+        }
+
         public Client GetClientById(int id)
         {
             return _clientsRepository.GetClientById(id);

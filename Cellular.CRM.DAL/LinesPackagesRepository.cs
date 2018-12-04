@@ -1,5 +1,6 @@
 ﻿using Cellular.Common.CRM;
 using Cellular.Common.Models;
+using Cellular.MainDal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,37 +13,70 @@ namespace Cellular.CRM.DAL
     {
         public void AddLine(Line line)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                db.Lines.Add(line);
+                db.SaveChanges();
+            }
         }
 
         public void AddPackage(Package package)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                db.Packages.Add(package);
+                db.SaveChanges();
+            }
         }
 
         public void DeleteLine(string lineNumber)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                var lineRemoved = db.Lines.FirstOrDefault(l => l.PhoneNumber == lineNumber);
+                db.Lines.Remove(lineRemoved);
+                db.SaveChanges();
+            }
         }
 
         public void DeletePackage(int packageId)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                var packageRemoved = db.Packages.FirstOrDefault(p => p.Id == packageId);
+                db.Packages.Remove(packageRemoved);
+                db.SaveChanges();
+            }
         }
 
-        public void EditPackage(Package package)
+        public Package EditPackage(Package package)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                var packageEdited = db.Packages.FirstOrDefault(p => p.Id == package.Id);
+                packageEdited = package;
+                db.Entry(package).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return packageEdited;
+            }
         }
 
         public Line[] GetLinesOfClient(int clientId)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                return db.Lines.Where(l => l.ClientId == clientId).ToArray();
+            }
         }
 
         public Package GetPackageOfLine(string lineNumber)
         {
-            throw new NotImplementedException();
+            using (var db = new CellularDbContext())
+            {
+                return db.Packages.FirstOrDefault(p => p.LineNumber == lineNumber);
+            }
         }
+
+       
     }
 }

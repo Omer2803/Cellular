@@ -1,19 +1,25 @@
-﻿using System;
+﻿using Cellular.CRM.Client.UWP.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Cellular.CRM.Client
+namespace Cellular.CRM.Client.UWP.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
         private Page _page;
+        private CrmBlClient _crmBlClient;
+
         public LoginViewModel(Page page)
         {
             this._page = page;
+            _crmBlClient = new CrmBlClient();
         }
         private int _id;
 
@@ -31,6 +37,14 @@ namespace Cellular.CRM.Client
             set { _password = value; Notify(nameof(Password)); }
         }
 
+        private string _error;
+
+        public string Error
+        {
+            get { return _error; }
+            set { _error = value; Notify(nameof(Error)); }
+        }
+
         private void Notify(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
@@ -40,14 +54,14 @@ namespace Cellular.CRM.Client
 
         public void Login(object sender, RoutedEventArgs e)
         {
-            using (var httpClient = new HttpClient())
+            var loginEmployee = _crmBlClient.LoginEmployee(Id, Password);
+            if (loginEmployee != null)
             {
-                httpClient.BaseAddress = new Uri("http://localhost:50602/");
-                var response =  httpClient.GetAsync("api/Clients/LoginEmployee?id=5&password=4").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    
-                }
+                _page.Frame.Navigate(typeof(ClientsView), Id);
+            }
+            else
+            {
+                Error = "The username or the password isn't correct";
             }
         }
     }
