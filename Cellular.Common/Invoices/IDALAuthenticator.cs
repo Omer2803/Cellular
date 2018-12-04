@@ -6,6 +6,6 @@ namespace Cellular.Common.Invoices
 {
     public interface IDALAuthenticator
     {
-
+        object GetClientOrEmployee(int id, string password);
     }
 }

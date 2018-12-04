@@ -5,7 +5,6 @@ namespace Cellular.Common.Models
 {
     public class Line
     {
-        [Key]
         public string PhoneNumber { get; set; }
 
         [ForeignKey(nameof(Client))]
