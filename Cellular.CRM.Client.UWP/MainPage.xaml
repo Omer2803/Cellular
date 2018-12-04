@@ -5,23 +5,21 @@
     xmlns:local="using:Cellular.CRM.Client.UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Cellular.CRM.Client"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="ID"/>
-            <TextBox Width="100" Text="{x:Bind LoginViewModel.Id}" />
+            <TextBox Width="100" Text="{x:Bind LoginViewModel.Id,Mode=TwoWay}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Password"/>
-            <TextBox Width="100" Text="{x:Bind LoginViewModel.Password}"/>
+            <TextBox Width="100" Text="{x:Bind LoginViewModel.Password, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Content="Login" Click="{x:Bind LoginViewModel.Login}">
+            <Button Content="Login"  Click="{x:Bind LoginViewModel.Login}">
             </Button>
-            
         </StackPanel>
     </StackPanel>
 </Page>

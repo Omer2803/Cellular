@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cellular.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,7 +12,15 @@ namespace Cellular.MainDal
     {
         protected override void Seed(CellularDbContext context)
         {
-            
+            var emp = new Employee()
+            {
+                FirstName = "Omer",
+                LastName = "Cohen",
+                Password = "1",
+                Rank = EmployeeRank.Manager
+            };
+            context.Employees.Add(emp);
+            context.SaveChanges();
         }
     }
 }

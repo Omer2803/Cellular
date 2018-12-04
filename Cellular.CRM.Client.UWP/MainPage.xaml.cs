@@ -26,8 +26,7 @@ namespace Cellular.CRM.Client.UWP
         public MainPage()
         {
             this.InitializeComponent();
-            LoginViewModel = new LoginViewModel();
-            this.DataContext = LoginViewModel;
+            LoginViewModel = new LoginViewModel(this);
         }
 
         

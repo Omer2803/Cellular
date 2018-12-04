@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cellular.CRM.BL
 {
-    class ClientsManager : IClientsManager
+    public class ClientsManager : IClientsManager
     {
         private readonly IClientsRepository _clientsRepository;
 
@@ -30,6 +30,11 @@ namespace Cellular.CRM.BL
         public void EditClient(Client client)
         {
             _clientsRepository.EditClient(client);
+        }
+
+        public Client GetClientById(int id)
+        {
+            return _clientsRepository.GetClientById(id);
         }
     }
 }
