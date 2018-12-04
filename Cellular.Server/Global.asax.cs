@@ -35,9 +35,9 @@ namespace Cellular.Server
             container.Register<IOptimalPackageCalculator>(() => invoicesIoc.GetInstanceOf<IOptimalPackageCalculator>());
             container.Register<ISimulator>(() => invoicesIoc.GetInstanceOf<ISimulator>());
 
-            container.Verify();
-
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+
+            container.Verify();
 
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);

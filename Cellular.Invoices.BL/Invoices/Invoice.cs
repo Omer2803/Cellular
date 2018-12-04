@@ -25,15 +25,7 @@ namespace Cellular.Invoices.BL.Invoices
         {
             get
             {
-                double result = 0;
-                foreach (var item in Packages)
-                {
-                    result += item.TotalPrice;
-                }
-
-
-
-                return result;
+                throw new NotImplementedException();
             }
         }
     }
