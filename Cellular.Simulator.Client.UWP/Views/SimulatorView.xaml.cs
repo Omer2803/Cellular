@@ -27,7 +27,7 @@ namespace Cellular.Simulator.Client.UWP.Views
 
         public SimulatorView()
         {
-            ViewModel = new SimulatorViewModel();
+            ViewModel = new SimulatorViewModel(); 
 
             this.InitializeComponent();
         }

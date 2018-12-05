@@ -16,18 +16,20 @@
                 <RadioButton Content="SMS"/>
             </StackPanel>
 
-            <TextBox PlaceholderText="Client ID"/>
+            <TextBlock Text="Client ID"/>
+            <TextBox PlaceholderText="Put a client ID"/>
 
-            <ComboBox />
+            <ComboBox Header="Line number" PlaceholderText="Select a number" ItemsSource="{x:Bind ViewModel.}" />
 
             <TextBlock Text="Max uration minuets"/>
             <TextBox />
 
             <TextBlock Text="Min duration minuets"/>
             <TextBox/>
+            
+            <ComboBox Header=""
 
             <Button Content="Simulate" Click="{x:Bind ViewModel.Simulate}" HorizontalAlignment="Center"/>
         </StackPanel>
-
     </Grid>
 </Page>

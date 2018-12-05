@@ -1,4 +1,5 @@
-﻿using Cellular.Common.Models;
+﻿using Cellular.Common.Invoices.Models;
+using Cellular.Common.Models;
 using Cellular.Simulator.Client.HttpClients;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace Cellular.Simulator.Client.ViewModels
             //this.view = view;
             httpClient = new SimulatorHttpClient();
             durationGenerator = new Random();
+
+            SendToOptions = Enum.GetNames(typeof(DestinationOption));
         }
 
         private int _clientId;
@@ -83,24 +86,52 @@ namespace Cellular.Simulator.Client.ViewModels
             }
         }
 
+        private string sentTo;
+        public string SendTo
+        {
+            get { return sentTo; }
+            set
+            {
+                SendTo = value;
+                Notify();
+            }
+        }
+
+        public string[] SendToOptions { get; }
+
+        private int simulations;
+
+        public string Simulations
+        {
+            get => simulations.ToString();
+            set
+            {
+                if (int.TryParse(value, out int i))
+                    simulations = i;
+            }
+        }
+
 
         public async Task Simulate()
         {
             switch (isCall)
             {
                 case true:
-                    await httpClient.PostCall(new Call
+                    await httpClient.PostCall(new SimulatorCalls
                     {
                         CallerNumber = SelectedNumber,
-                        Duration = TimeSpan.FromMinutes((durationGenerator.Next() / (double)int.MaxValue) * (maxDuration - minDuration) + minDuration),
-                        StartTime = DateTime.Now
+                        DestinationOption = (DestinationOption)Enum.Parse(typeof(DestinationOption), SendTo),
+                        MinDuration = TimeSpan.FromMinutes(minDuration),
+                        MaxDuration = TimeSpan.FromMinutes(maxDuration),
+                        Simulations = simulations
                     });
                     return;
                 case false:
-                    await httpClient.PostSMS(new SMS
+                    await httpClient.PostSMS(new SimulatorSMSes
                     {
                         SenderNumber = selectedNumber,
-                        SendingTime = DateTime.Now,                        
+                        DestinationOption = (DestinationOption)Enum.Parse(typeof(DestinationOption), SendTo),
+                        Simulations = simulations
                     });
                     return;
                 default: throw new Exception();

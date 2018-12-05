@@ -18,7 +18,7 @@ namespace Cellular.Invoices.BL.Invoices
 
         public object Login(int id, string password)
         {
-            throw new NotImplementedException();
+            return dALAuthenticator.GetClientOrEmployee(id, password);
         }
     }
 }
