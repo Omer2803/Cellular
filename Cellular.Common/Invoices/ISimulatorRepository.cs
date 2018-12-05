@@ -7,5 +7,8 @@ namespace Cellular.Common.Invoices
         void AddCall(Call call);
 
         void AddSMS(SMS sms);
+
+        string[] NumbersOf(int clientId);
+
     }
 }

@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="Cellular.Simulator.Client.UWP.Views.SimulatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Cellular.Simulator.Client.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton Content="Call"/>
+                <RadioButton Content="SMS"/>
+            </StackPanel>
+
+            <TextBox PlaceholderText="Client ID"/>
+
+            <ComboBox />
+
+            <TextBlock Text="Max uration minuets"/>
+            <TextBox />
+
+            <TextBlock Text="Min duration minuets"/>
+            <TextBox/>
+
+            <Button Content="Simulate" Click="{x:Bind ViewModel.Simulate}" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+    </Grid>
+</Page>

@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="8d1ef356-db4e-454f-80e5-c6f1d304843d"
+    Name="ea6895f9-030e-4ca7-a2c1-8acd0fb93410"
     Publisher="CN=ניר לונדון"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="8d1ef356-db4e-454f-80e5-c6f1d304843d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="ea6895f9-030e-4ca7-a2c1-8acd0fb93410" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Cellular.Simulator.Client.UWP</DisplayName>

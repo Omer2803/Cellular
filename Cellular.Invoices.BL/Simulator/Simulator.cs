@@ -1,10 +1,5 @@
 ﻿using Cellular.Common.Invoices;
 using Cellular.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cellular.Invoices.BL.Simulator
 {
@@ -19,12 +14,17 @@ namespace Cellular.Invoices.BL.Simulator
 
         public void AddCall(Call call)
         {
-            throw new NotImplementedException();
+            repository.AddCall(call);
         }
 
         public void AddSMS(SMS sms)
         {
-            throw new NotImplementedException();
+            repository.AddSMS(sms);
+        }
+
+        public string[] NumbersOf(int clientId)
+        {
+            return repository.NumbersOf(clientId);
         }
     }
 }
