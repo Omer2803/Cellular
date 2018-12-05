@@ -49,9 +49,17 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             set { _clients = value; Notify(nameof(Clients)); }
         }
 
+        private int _employeeId;
+
+        public int EmployeeId
+        {
+            get { return _employeeId; }
+            set { _employeeId = value; Notify(nameof(EmployeeId)); }
+        }
+
         public void NavigateToAddClientView(object sender, RoutedEventArgs e)
         {
-            _page.Frame.Navigate(typeof(AddClientView),id);
+            _page.Frame.Navigate(typeof(AddClientView), EmployeeId);
 
         }
 

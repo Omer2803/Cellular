@@ -9,10 +9,10 @@
 
     <StackPanel>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBox Width="150" PlaceholderText="Id" Text="{x:Bind AddClientViewModel.Id}"/>
-            <TextBox Width="150" PlaceholderText="FirstName" Text="{x:Bind AddClientViewModel.FirstName}"/>
-            <TextBox Width="150" PlaceholderText="LastName" Text="{x:Bind AddClientViewModel.LastName}"/>
-            <TextBox Width="150" PlaceholderText="Password" Text="{x:Bind AddClientViewModel.Password}"/>
+            <TextBox Width="150" PlaceholderText="Id" Text="{x:Bind AddClientViewModel.Id,Mode=TwoWay}"/>
+            <TextBox Width="150" PlaceholderText="FirstName" Text="{x:Bind AddClientViewModel.FirstName,Mode=TwoWay}"/>
+            <TextBox Width="150" PlaceholderText="LastName" Text="{x:Bind AddClientViewModel.LastName,Mode=TwoWay}"/>
+            <TextBox Width="150" PlaceholderText="Password" Text="{x:Bind AddClientViewModel.Password,Mode=TwoWay}"/>
             <Button Content="Add Client" Click="{x:Bind AddClientViewModel.AddNewClient}">
             </Button>
         </StackPanel>

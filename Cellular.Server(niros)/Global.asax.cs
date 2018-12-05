@@ -42,7 +42,8 @@ namespace Cellular.Server
 
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
-            
+
         }
     }
 }
+
