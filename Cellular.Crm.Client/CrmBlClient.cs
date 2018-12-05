@@ -1,9 +1,11 @@
-﻿using Cellular.Common.Models;
+﻿using Mods = Cellular.Common.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Cellular.CRM.Client
@@ -12,7 +14,7 @@ namespace Cellular.CRM.Client
     {
         private const string urlServerBase = "http://localhost:50602/";
 
-        public Employee LoginEmployee(int id, string password)
+        public Mods.Employee LoginEmployee(int id, string password)
         {
             using (var httpClient = new HttpClient())
             {
@@ -21,14 +23,14 @@ namespace Cellular.CRM.Client
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<Employee>(jsonResult);
+                    return JsonConvert.DeserializeObject<Mods.Employee>(jsonResult);
 
                 }
             }
             return null;
         }
 
-        public List<Common.Models.Client> GetAllClients()
+        public List<Mods.Client> GetAllClients()
         {
             using (var httpClient = new HttpClient())
             {
@@ -51,7 +53,7 @@ namespace Cellular.CRM.Client
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(urlServerBase);
-                var newClient = new Cellular.Common.Models.Client()
+                var client = new Common.Models.Client()
                 {
                     Id = id,
                     FirstName = firstName,
@@ -60,7 +62,11 @@ namespace Cellular.CRM.Client
                     RegisterationDate = DateTime.Now,
                     RegisteredBy = employeeId
                 };
-                var response = httpClient.PostAsJsonAsync($"api/Clients/AddClient", newClient).Result;
+                httpClient.DefaultRequestHeaders.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                StringContent content = new StringContent(JsonConvert.SerializeObject(client), Encoding.UTF8, "application/json");
+                //var json = JsonConvert.SerializeObject(client);
+                var response = httpClient.PostAsJsonAsync("api/Clients/AddClient", client).Result;
                 if (!response.IsSuccessStatusCode)
                     throw new Exception("Couldn't post this object");
             }

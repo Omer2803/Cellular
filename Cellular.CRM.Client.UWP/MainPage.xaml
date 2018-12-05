@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+   
+        
+    
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="ID"/>

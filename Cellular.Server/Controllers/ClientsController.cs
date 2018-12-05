@@ -35,7 +35,8 @@ namespace Cellular.Server.Controllers
             }
         }
 
-        //[HttpPost]
+        [HttpPost]
+        [Route("AddClient")]
         public IHttpActionResult AddClient([FromBody]Client client)
         {
             try
@@ -43,9 +44,9 @@ namespace Cellular.Server.Controllers
                 _clientsManager.AddClient(client);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -63,7 +64,8 @@ namespace Cellular.Server.Controllers
             }
         }
 
-       // [HttpGet]
+        
+        [HttpGet]
         public IHttpActionResult GetClientDetails(int clientId)
         {
             try
@@ -76,7 +78,7 @@ namespace Cellular.Server.Controllers
                 return BadRequest();
             }
         }
-
+        
         public IHttpActionResult GetAllClients()
         {
             try

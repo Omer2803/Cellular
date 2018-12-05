@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cellular.CRM.Client.UWP.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -76,11 +77,12 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             _crmBlClient = new CrmBlClient();
         }
 
-        public void AddNewClient(object sender, RoutedEventArgs routedEvent)
+        public void AddNewClient(object sender,RoutedEventArgs e)
         {
             try
             {
                 _crmBlClient.AddNewClient(Id, LastName, FirstName, Password, EmployeeId);
+                page.Frame.Navigate(typeof(ClientsView), EmployeeId);
 
             }
             catch (Exception ex)

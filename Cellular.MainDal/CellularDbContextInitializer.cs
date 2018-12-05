@@ -20,7 +20,28 @@ namespace Cellular.MainDal
                 Password = "1",
                 Rank = EmployeeRank.Manager
             };
+            var client1 = new Client()
+            {
+                FirstName = "Yarin",
+                Id = 12,
+                LastName = "Dolev",
+                Password = "1",
+                RegisteredBy = 3121,
+                RegisterationDate = DateTime.Now
+            };
+            var client2 = new Client()
+            {
+                FirstName = "Avi",
+                Id = 15,
+                LastName = "Hadad",
+                Password = "1",
+                RegisteredBy = 3121,
+                RegisterationDate = DateTime.Now
+
+            };
             context.Employees.Add(emp);
+            context.Clients.Add(client1);
+            context.Clients.Add(client2);
             context.SaveChanges();
         }
     }

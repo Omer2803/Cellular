@@ -1,4 +1,5 @@
 ﻿using Cellular.CRM.Client.UWP.ViewModels;
+using Cellular.CRM.Client.UWP.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,9 +28,16 @@ namespace Cellular.CRM.Client.UWP
         public MainPage()
         {
             this.InitializeComponent();
+            GoToClientView();
             LoginViewModel = new LoginViewModel(this);
         }
 
-        
+        private async void GoToClientView()
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+             {
+                 this.Frame.Navigate(typeof(ClientsView), 1);
+             });
+        }
     }
 }

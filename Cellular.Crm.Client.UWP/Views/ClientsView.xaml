@@ -10,10 +10,19 @@
         <ListBox ItemsSource="{x:Bind ClientsViewModel.Clients}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding }"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Id}"/>
+                        <TextBlock Text="{Binding FirstName}"/>
+                        <TextBlock Text="{Binding LastName}"/>
+                        <TextBlock Text="{Binding RegisterationDate}"/>
+                        <TextBlock Text="{Binding ClientTypeId}"/>
+                        <Button Content="Edit details"/>
+                        <Button Content="Add line"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
         <Button Content="Add" Click="{x:Bind ClientsViewModel.NavigateToAddClientView}">
         </Button>
     </StackPanel>

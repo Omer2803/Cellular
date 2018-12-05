@@ -24,11 +24,17 @@ namespace Cellular.CRM.Client.UWP.Views
     public sealed partial class AddClientView : Page
     {
         public AddClientViewModel AddClientViewModel;
-
+        private int _employeeId;
         public AddClientView()
         {
             this.InitializeComponent();
             AddClientViewModel = new AddClientViewModel(this);
+            AddClientViewModel.EmployeeId = _employeeId;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _employeeId = (int)e.Parameter;
         }
     }
 }
