@@ -35,15 +35,18 @@ namespace Cellular.CRM.Client
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(urlServerBase);
-                var response = httpClient.GetAsync($"api/Clients/GetAllClients").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<List<Cellular.Common.Models.Client>>(jsonResult);
+                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:50602/api/Clients/GetAllClients");
+                string js = httpRequest.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<List<Cellular.Common.Models.Client>>(js);
+                //var response = httpClient.GetAsync($"api/Clients/GetAllClients").Result;
+                //string jsonResult = response.Content.ReadAsStringAsync().Result;
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    return JsonConvert.DeserializeObject<List<Cellular.Common.Models.Client>>(jsonResult);
 
-                }
+                //}
             }
-            return null;
+            //return null;
         }
 
 
