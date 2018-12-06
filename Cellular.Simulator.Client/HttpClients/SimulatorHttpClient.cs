@@ -1,5 +1,4 @@
 ﻿using Cellular.Common.Invoices.Models;
-using Cellular.Common.Models;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,22 +23,22 @@ namespace Cellular.Simulator.Client.HttpClients
             }
         }
 
-        public async Task PostCall(SimulatorCalls calls)
+        public async Task SimulateCalls(SimulatorCalls calls)
         {
             using (var client = new HttpClient { BaseAddress = uri })
             {
-                var response = await client.PostAsJsonAsync($"api/simulator/addcalls", calls);
+                var response = await client.PostAsJsonAsync($"api/simulator/SimulateCalls", calls);
 
                 if (!response.IsSuccessStatusCode)
                     throw new Exception("Could not post the call");
             }
         }
 
-        public async Task PostSMS(SimulatorSMSes smses)
+        public async Task SimulateSMSes(SimulatorSMSes smses)
         {
             using (var client = new HttpClient { BaseAddress = uri })
             {
-                var response = await client.PostAsJsonAsync($"api/simulator/addsmses. ", smses);
+                var response = await client.PostAsJsonAsync($"api/simulator/SimulateSMSes", smses);
 
                 if (!response.IsSuccessStatusCode)
                     throw new Exception("Could not post the SMS. ");
