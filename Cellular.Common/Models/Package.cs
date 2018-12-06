@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
-namespace Cellular.Common.Models
+﻿namespace Cellular.Common.Models
 {
     public class Package
     {
         public int Id { get; set; }
 
-        [ForeignKey(nameof(Line))]
         public string LineNumber { get; set; }
         public Line Line { get; set; }
 

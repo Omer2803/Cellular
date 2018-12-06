@@ -1,11 +1,6 @@
 ﻿using Cellular.Common.Invoices;
 using Cellular.Common.Invoices.Models;
-using Cellular.Common.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Cellular.Server.Controllers
@@ -22,14 +17,22 @@ namespace Cellular.Server.Controllers
         [HttpGet]
         public IHttpActionResult NumbersOf(int clientId)
         {
-            var numbers = simulator.NumbersOf(clientId);
-            if (numbers == null || numbers.Length == 0)
-                BadRequest();
-            return Ok(numbers);
+            try
+            {
+                var numbers = simulator.NumbersOf(clientId);
+                if (numbers == null || numbers.Length == 0)
+                    return BadRequest();
+                return Ok(numbers);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
-        public IHttpActionResult AddCalls(SimulatorCalls calls)
+        [Route("api/Simulator/SimulateCalls")]
+        public IHttpActionResult SimulateCalls([FromBody] SimulatorCalls calls)
         {
             try
             {
@@ -43,7 +46,8 @@ namespace Cellular.Server.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult AddSMSes(SimulatorSMSes smses)
+        [Route("api/Simulator/SimulateSMSes")]
+        public IHttpActionResult SimulateSMSes([FromBody] SimulatorSMSes smses)
         {
             try
             {

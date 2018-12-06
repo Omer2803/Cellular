@@ -1,49 +1,52 @@
 ﻿using Cellular.Common.Invoices.Models;
-using Cellular.Common.Models;
 using Cellular.Simulator.Client.HttpClients;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Cellular.Simulator.Client.ViewModels
 {
     public class SimulatorViewModel : INotifyPropertyChanged
     {
-        //private readonly INavigateable view;
         private readonly SimulatorHttpClient httpClient;
-        private readonly Random durationGenerator;
 
-        public SimulatorViewModel(/*INavigateable view*/)
+        public SimulatorViewModel()
         {
-            //this.view = view;
             httpClient = new SimulatorHttpClient();
-            durationGenerator = new Random();
-
+            numbers = new string[0];
             SendToOptions = Enum.GetNames(typeof(DestinationOption));
+
+            isCall = true;
+            isSMS = false;
         }
 
-        private int _clientId;
+        private int clientId;
         public int ClientId
         {
-            get => _clientId;
+            get => clientId;
             set
             {
-                _clientId = value;
-                Numbers.Clear();
-                httpClient.NumbersOf(value)
-                    .ContinueWith(t =>
-                    {
-                        foreach (var num in t.Result)
-                            Numbers.Add(num);
-                        Notify();
-                    });
+                SetClientId(value);
+                Notify();
             }
         }
+        private async void SetClientId(int value)
+        {
+            clientId = value;
+            Numbers = await httpClient.NumbersOf(value);
+        }
 
-        public ObservableCollection<string> Numbers { get; set; }
+        private string[] numbers;
+        public string[] Numbers
+        {
+            get => numbers;
+            set
+            {
+                numbers = value;
+                Notify(nameof(Numbers));
+            }
+        }
 
         private bool isCall;
         public bool IsCall
@@ -52,16 +55,33 @@ namespace Cellular.Simulator.Client.ViewModels
             set
             {
                 isCall = value;
-                Notify();
+                isSMS = !value;
+                Notify(nameof(IsSMS));
+                Notify(nameof(IsCall));
             }
         }
-
+        private bool isSMS;
+        public bool IsSMS
+        {
+            get { return isSMS; }
+            set
+            {
+                isSMS = value;
+                isCall = !value;
+                Notify(nameof(IsCall));
+                Notify(nameof(IsSMS));
+            }
+        }
 
         private string selectedNumber;
         public string SelectedNumber
         {
-            get { return selectedNumber; }
-            set { selectedNumber = value; }
+            get => selectedNumber;
+            set
+            {
+                selectedNumber = value;
+                Notify(nameof(CanSimulate));
+            }
         }
 
         private double minDuration;
@@ -74,73 +94,83 @@ namespace Cellular.Simulator.Client.ViewModels
                 Notify();
             }
         }
-
         private double maxDuration;
         public double MaxDuration
         {
-            get => maxDuration;
-            set
+            get => maxDuration; set
             {
                 maxDuration = value;
                 Notify();
             }
         }
 
-        private string sentTo;
+        private DestinationOption sendTo;
+
         public string SendTo
         {
-            get { return sentTo; }
+            get => sendTo.ToString();
             set
             {
-                SendTo = value;
-                Notify();
+                sendTo = (DestinationOption)Enum.Parse(typeof(DestinationOption), value);
+                Notify(nameof(CanSimulate));
             }
         }
 
         public string[] SendToOptions { get; }
 
         private int simulations;
-
-        public string Simulations
+        public int Simulations
         {
-            get => simulations.ToString();
-            set
+            get => simulations; set
             {
-                if (int.TryParse(value, out int i))
-                    simulations = i;
+                simulations = value;
+                Notify();
             }
         }
 
-
         public async Task Simulate()
         {
+            if (!CanSimulate) return;
             switch (isCall)
             {
                 case true:
-                    await httpClient.PostCall(new SimulatorCalls
+                    await httpClient.SimulateCalls(new SimulatorCalls
                     {
                         CallerNumber = SelectedNumber,
-                        DestinationOption = (DestinationOption)Enum.Parse(typeof(DestinationOption), SendTo),
-                        MinDuration = TimeSpan.FromMinutes(minDuration),
-                        MaxDuration = TimeSpan.FromMinutes(maxDuration),
-                        Simulations = simulations
+                        DestinationOption = sendTo,
+                        MinDuration = TimeSpan.FromMinutes(MinDuration),
+                        MaxDuration = TimeSpan.FromMinutes(MaxDuration),
+                        Simulations = Simulations
                     });
                     return;
                 case false:
-                    await httpClient.PostSMS(new SimulatorSMSes
+                    await httpClient.SimulateSMSes(new SimulatorSMSes
                     {
-                        SenderNumber = selectedNumber,
-                        DestinationOption = (DestinationOption)Enum.Parse(typeof(DestinationOption), SendTo),
-                        Simulations = simulations
+                        SenderNumber = SelectedNumber,
+                        DestinationOption = sendTo,
+                        Simulations = Simulations
                     });
                     return;
                 default: throw new Exception();
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void Notify(string propertyName = null)
+        public bool CanSimulate
         {
+            get
+            {
+                return SelectedNumber != null
+                    && sendTo != 0
+                    && clientId != 0
+                    && simulations > 0
+                    && (isCall ? (minDuration > 0 && maxDuration > minDuration) : true);
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void Notify([CallerMemberName] string propertyName = null)
+        {
+            if(propertyName != nameof(CanSimulate))Notify(nameof(CanSimulate));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

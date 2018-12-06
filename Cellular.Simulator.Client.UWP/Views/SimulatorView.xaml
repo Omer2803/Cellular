@@ -5,31 +5,50 @@
     xmlns:local="using:Cellular.Simulator.Client.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Cellular.Simulator.Client.UWP.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:StringToIntConverter x:Key="strToInt"/>
+        <converters:StringToDoubleConverter x:Key="strToDbl"/>
+    </Page.Resources>
+    
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <RadioButton Content="Call"/>
-                <RadioButton Content="SMS"/>
+                <CheckBox Content="Call" IsChecked="{x:Bind ViewModel.IsCall, Mode=TwoWay}"/>
+                <CheckBox Content="SMS" IsChecked="{x:Bind ViewModel.IsSMS, Mode=TwoWay}"/>
             </StackPanel>
 
             <TextBlock Text="Client ID"/>
-            <TextBox PlaceholderText="Put a client ID"/>
+            <TextBox PlaceholderText="Put a client ID" 
+                     Text="{x:Bind ViewModel.ClientId, Mode=TwoWay, Converter={StaticResource ResourceKey=strToInt}}"/>
 
-            <ComboBox Header="Line number" PlaceholderText="Select a number" ItemsSource="{x:Bind ViewModel.}" />
+            <ComboBox Header="Line number"
+                      PlaceholderText="Select a number"
+                      ItemsSource="{x:Bind ViewModel.Numbers, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedNumber, Mode=TwoWay}"/>
 
-            <TextBlock Text="Max uration minuets"/>
-            <TextBox />
+            <StackPanel Visibility="{x:Bind ViewModel.IsCall, Mode=OneWay}">
+                <TextBlock Text="Max duration minuets"/>
+                <TextBox Text="{x:Bind ViewModel.MaxDuration, Mode=TwoWay, Converter={StaticResource ResourceKey=strToDbl}}" />
 
-            <TextBlock Text="Min duration minuets"/>
-            <TextBox/>
-            
-            <ComboBox Header=""
+                <TextBlock Text="Min duration minuets"/>
+                <TextBox Text="{x:Bind ViewModel.MinDuration, Mode=TwoWay, Converter={StaticResource ResourceKey=strToDbl}}"/>
+            </StackPanel>
 
-            <Button Content="Simulate" Click="{x:Bind ViewModel.Simulate}" HorizontalAlignment="Center"/>
+            <TextBlock Text="Amount of simulations:"/>
+            <TextBox Text="{x:Bind ViewModel.Simulations, Mode=TwoWay, Converter={StaticResource ResourceKey=strToInt}}"/>
+
+            <ComboBox Header="Send To" 
+                      ItemsSource="{x:Bind ViewModel.SendToOptions}"
+                      SelectedItem="{x:Bind ViewModel.SendTo, Mode=TwoWay}"/>
+
+            <Button Content="Simulate" Click="{x:Bind ViewModel.Simulate}"
+                    HorizontalAlignment="Center"
+                    IsEnabled="{x:Bind ViewModel.CanSimulate, Mode=OneWay}"/>
         </StackPanel>
     </Grid>
 </Page>

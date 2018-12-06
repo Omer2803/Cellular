@@ -8,11 +8,13 @@ namespace Cellular.Common.Models
     public class Client
     {
         public int Id { get; set; }
-        //public ClientTypeEnum ClientTypeId { get; set; }
+
+        public ClientTypeEnum ClientTypeId { get; set; }
+        public ClientType ClientType { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        [ForeignKey(nameof(Registrator))]
         public int RegisteredBy { get; set; }
         public Employee Registrator { get; set; }
 
