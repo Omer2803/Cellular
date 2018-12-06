@@ -30,26 +30,49 @@ namespace Cellular.CRM.Client
             return null;
         }
 
+        public List<Mods.Line> GetLinesByClientId(int clientId)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(urlServerBase);
+                httpClient.DefaultRequestHeaders.Clear();
+                var response = httpClient.GetAsync("api/Lines")
+            }
+        }
+
+        public Mods.Client SaveClientDetails(Mods.Client clientEdited)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(urlServerBase);
+                httpClient.DefaultRequestHeaders.Clear();
+                var response = httpClient.PutAsJsonAsync("api/Clients/EditClient", clientEdited).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<Cellular.Common.Models.Client>(jsonResult);
+                }
+                return null;
+            }
+        }
+
         public List<Mods.Client> GetAllClients()
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(urlServerBase);
-                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:50602/api/Clients/GetAllClients");
-                string js = httpRequest.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<List<Cellular.Common.Models.Client>>(js);
-                //var response = httpClient.GetAsync($"api/Clients/GetAllClients").Result;
-                //string jsonResult = response.Content.ReadAsStringAsync().Result;
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    return JsonConvert.DeserializeObject<List<Cellular.Common.Models.Client>>(jsonResult);
-
-                //}
+                httpClient.DefaultRequestHeaders.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = httpClient.GetAsync("api/Clients/GetAllClients").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<List<Cellular.Common.Models.Client>>(jsonResult);
+                }
             }
-            //return null;
+            return null;
+           
         }
-
-
 
         public void AddNewClient(int id, string lastName, string firstName, string password, int employeeId)
         {
@@ -67,8 +90,6 @@ namespace Cellular.CRM.Client
                 };
                 httpClient.DefaultRequestHeaders.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                StringContent content = new StringContent(JsonConvert.SerializeObject(client), Encoding.UTF8, "application/json");
-                //var json = JsonConvert.SerializeObject(client);
                 var response = httpClient.PostAsJsonAsync("api/Clients/AddClient", client).Result;
                 if (!response.IsSuccessStatusCode)
                     throw new Exception("Couldn't post this object");

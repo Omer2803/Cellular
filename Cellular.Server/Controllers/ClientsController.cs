@@ -39,7 +39,6 @@ namespace Cellular.Server.Controllers
 
         [HttpPost]
         [Route("AddClient")]
-        [AcceptVerbs("GET", "POST")]
         public IHttpActionResult AddClient([FromBody]Client client)
         {
             try
@@ -83,7 +82,6 @@ namespace Cellular.Server.Controllers
             }
         }
         [HttpGet]
-        [AcceptVerbs("GET", "POST")]
         [Route("GetAllClients")]
         public IHttpActionResult GetAllClients()
         {
@@ -98,7 +96,8 @@ namespace Cellular.Server.Controllers
             }
         }
 
-        //[HttpPut]
+        [HttpPut]
+        [Route("EditClient")]
         public IHttpActionResult EditClient(Client client)
         {
             try

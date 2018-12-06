@@ -61,11 +61,13 @@ namespace Cellular.CRM.DAL
             }
         }
 
-        public Line[] GetLinesOfClient(int clientId)
+       
+
+        public List<Line> GetLinesOfClient(int clientId)
         {
             using (var db = new CellularDbContext())
             {
-                return db.Lines.Where(l => l.ClientId == clientId).ToArray();
+                return db.Lines.Where(l => l.ClientId == clientId).ToList();
             }
         }
 

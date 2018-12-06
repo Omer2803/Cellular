@@ -4,20 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{15A0C232-5E88-46EC-8197-F8F4BE2CFF24}</ProjectGuid>
+    <ProjectGuid>{A79EB583-1B56-48C5-B4B8-81E5063698F8}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cellular.CRM.Client.UWP</RootNamespace>
-    <AssemblyName>Cellular.CRM.Client.UWP</AssemblyName>
+    <RootNamespace>Cellular.Crm.UI</RootNamespace>
+    <AssemblyName>Cellular.Crm.UI</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>Cellular.CRM.Client.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Cellular.Crm.UI_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,30 +99,16 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AddClientViewModel.cs" />
-    <Compile Include="ViewModels\AddLineViewModel.cs" />
     <Compile Include="ViewModels\ClientsViewModel.cs" />
-    <Compile Include="ViewModels\EditClientViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="Views\AddClientView.xaml.cs">
-      <DependentUpon>AddClientView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AddLineView.xaml.cs">
-      <DependentUpon>AddLineView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ClientsView.xaml.cs">
       <DependentUpon>ClientsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EditClientView.xaml.cs">
-      <DependentUpon>EditClientView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Cellular.CRM.Client.UWP_TemporaryKey.pfx" />
-    <None Include="CrmBlClient.cs~RF53d609.TMP" />
+    <None Include="Cellular.Crm.UI_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -143,39 +129,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AddClientView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AddLineView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ClientsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditClientView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.7</Version>
+      <Version>6.0.8</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Cellular.Common\Cellular.Common.csproj">
-      <Project>{0C2B77A0-EC13-4602-A3F0-93378DCA22A0}</Project>
-      <Name>Cellular.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Cellular.CRM.Client\Cellular.CRM.Client.csproj">
-      <Project>{82614f8b-b527-440f-9c53-643cfd5373dd}</Project>
-      <Name>Cellular.CRM.Client</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

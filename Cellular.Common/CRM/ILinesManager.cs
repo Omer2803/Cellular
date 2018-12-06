@@ -1,4 +1,5 @@
-﻿using Cellular.Common.Models;
+﻿using System.Collections.Generic;
+using Cellular.Common.Models;
 
 namespace Cellular.Common.CRM
 {
@@ -9,5 +10,6 @@ namespace Cellular.Common.CRM
         void AddPackage(Package package);
 
         Package EditPackage(Package package);
+        List<Line> GetLinesByClientId(int clientId);
     }
 }

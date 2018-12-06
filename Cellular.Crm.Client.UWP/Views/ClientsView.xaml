@@ -6,18 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
     <StackPanel>
-        <ListBox ItemsSource="{x:Bind ClientsViewModel.Clients}">
+        <ListBox SelectedItem="{x:Bind ClientsViewModel.ClientSelected,Mode=TwoWay}" ItemsSource="{x:Bind ClientsViewModel.Clients}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Id}"/>
+                        <TextBlock Text="{Binding Id}" />
                         <TextBlock Text="{Binding FirstName}"/>
                         <TextBlock Text="{Binding LastName}"/>
                         <TextBlock Text="{Binding RegisterationDate}"/>
                         <TextBlock Text="{Binding ClientTypeId}"/>
-                        <Button Content="Edit details"/>
-                        <Button Content="Add line"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -25,6 +24,8 @@
 
         <Button Content="Add" Click="{x:Bind ClientsViewModel.NavigateToAddClientView}">
         </Button>
+        <Button Content="Edit details" Click="{x:Bind ClientsViewModel.NavigateToEditClientView}"/>
+        <Button Content="Add line" Click="{x:Bind ClientsViewModel.NavigateToAddLineView}"/>
     </StackPanel>
 
 </Page>

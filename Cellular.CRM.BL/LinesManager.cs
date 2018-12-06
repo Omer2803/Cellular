@@ -31,5 +31,10 @@ namespace Cellular.CRM.BL
         {
             return _linesPackagesRepository.EditPackage(package);
         }
+
+        public List<Line> GetLinesByClientId(int clientId)
+        {
+            return _linesPackagesRepository.GetLinesOfClient(clientId);
+        }
     }
 }

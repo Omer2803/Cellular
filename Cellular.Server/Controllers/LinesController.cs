@@ -19,6 +19,21 @@ namespace Cellular.Server.Controllers
             this._linesManager = linesManager;
         }
 
+        [HttpGet]
+        [Route("GetLinesByClientId")]
+        public IHttpActionResult GetLinesByClientId(int clientId)
+        {
+            try
+            {
+               List<Line> lines= _linesManager.GetLinesByClientId(clientId);
+                return Ok(lines);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         public IHttpActionResult AddLine(int clientId, Line line)
         {
             try

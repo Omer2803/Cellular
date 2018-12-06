@@ -1,4 +1,5 @@
-﻿using Cellular.Common.Models;
+﻿using System.Collections.Generic;
+using Cellular.Common.Models;
 
 namespace Cellular.Common.CRM
 {
@@ -12,7 +13,7 @@ namespace Cellular.Common.CRM
 
         void DeletePackage(int packageId);
 
-        Line[] GetLinesOfClient(int clientId);
+        List<Line> GetLinesOfClient(int clientId);
 
         void AddLine(Line line);
 
