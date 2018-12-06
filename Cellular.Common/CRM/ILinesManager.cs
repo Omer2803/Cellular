@@ -5,9 +5,11 @@ namespace Cellular.Common.CRM
 {
     public interface ILinesManager
     {
-        void AddLine(int clientId, Line line);
+        void AddLine(Line line);
 
         void AddPackage(Package package);
+
+        Package GetPackageOfLine(string lineNumber);
 
         Package EditPackage(Package package);
         List<Line> GetLinesByClientId(int clientId);

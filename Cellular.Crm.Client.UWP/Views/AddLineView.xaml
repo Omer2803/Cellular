@@ -7,7 +7,45 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <StackPanel>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
+            <TextBlock Text="Line information"></TextBlock>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="Select Line"/>
+            <ComboBox ItemsSource="{x:Bind AddLineViewModel.Lines,Mode=TwoWay}"></ComboBox>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="Number"/>
+            <TextBox Text="{x:Bind AddLineViewModel.PhoneNumber,Mode=TwoWay}"></TextBox>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="Select Package"/>
+            <ComboBox></ComboBox>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <CheckBox Content="IncludesMinutes"/>
+            <TextBlock Text="Minutes"></TextBlock>
+            <TextBox Text="{x:Bind AddLineViewModel.MaxMinutes}"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <CheckBox Content="IncludesSms"/>
+            <TextBlock Text="Sms"></TextBlock>
+            <TextBox Text="{x:Bind AddLineViewModel.MaxSms}"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <CheckBox Content="IncludesFriends"/>
+            <TextBlock Text="Friends"></TextBlock>
+            <TextBox PlaceholderText="number1" Text="{x:Bind AddLineViewModel.Number1}"/>
+            <TextBox PlaceholderText="number2" Text="{x:Bind AddLineViewModel.Number2}"/>
+            <TextBox PlaceholderText="number3" Text="{x:Bind AddLineViewModel.Number3}"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="Total Price"/>
+            <TextBox IsReadOnly="True" Text="{x:Bind AddLineViewModel.TotalPrice,Mode=TwoWay}"></TextBox>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Add" Click="{x:Bind AddLineViewModel.AddLine}"></Button>
+        </StackPanel>
+    </StackPanel>
 </Page>

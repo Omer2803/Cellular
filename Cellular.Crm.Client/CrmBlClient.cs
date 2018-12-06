@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Cellular.Common.Models;
 
 namespace Cellular.CRM.Client
 {
@@ -36,7 +37,13 @@ namespace Cellular.CRM.Client
             {
                 httpClient.BaseAddress = new Uri(urlServerBase);
                 httpClient.DefaultRequestHeaders.Clear();
-                var response = httpClient.GetAsync("api/Lines")
+                var response = httpClient.GetAsync("api/Lines/GetLinesByClientId?clientId=" + clientId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<List<Mods.Line>>(jsonResult);
+                }
+                return null;
             }
         }
 
@@ -71,7 +78,7 @@ namespace Cellular.CRM.Client
                 }
             }
             return null;
-           
+
         }
 
         public void AddNewClient(int id, string lastName, string firstName, string password, int employeeId)
@@ -95,6 +102,49 @@ namespace Cellular.CRM.Client
                     throw new Exception("Couldn't post this object");
             }
 
+        }
+
+        public void AddNewLine(string phoneNumber, int clientId, Package package)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(urlServerBase);
+                var line = new Common.Models.Line()
+                {
+                    PhoneNumber = phoneNumber,
+                    ClientId = clientId
+                };
+                httpClient.DefaultRequestHeaders.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = httpClient.PostAsJsonAsync("api/Lines/AddLine", line).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var responsePack = httpClient.PostAsJsonAsync("api/Lines/AddPackage", package).Result;
+                    if (!responsePack.IsSuccessStatusCode)
+                        throw new Exception("Couldn't post this object");
+                }
+                else
+                {
+
+                    throw new Exception("Couldn't post this object");
+                }
+            }
+        }
+
+        public Package GetPackageOfLine(string lineNumber)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(urlServerBase);
+                var response = httpClient.GetAsync($"api/Lines/GetPackageOfLine?lineNumber={lineNumber}").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<Mods.Package>(jsonResult);
+
+                }
+            }
+            return null;
         }
     }
 

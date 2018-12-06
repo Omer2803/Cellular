@@ -34,6 +34,7 @@ namespace Cellular.CRM.Client.UWP.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             AddLineViewModel.ClientId = (int)e.Parameter;
+            
         }
     }
 }

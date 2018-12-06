@@ -6,13 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" DataContext="{x:Bind clientEdited,Mode=TwoWay}" >
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" DataContext="{x:Bind editClientViewModel.clientEdited,Mode=TwoWay}" >
         <TextBox Width="150" Text="{Binding Id}"  />
         <TextBox Width="150" Text="{Binding FirstName}"/>
         <TextBox Width="150" Text="{Binding LastName}"/>
         <TextBox Width="150" Text="{Binding RegisterationDate}"/>
         <TextBox Width="150" Text="{Binding ClientTypeId}"/>
-        <Button Content="Save details" Width="100" Click="{x:Bind editClientViewModel.}"
+        <Button Content="Save details" Width="100" Click="{x:Bind editClientViewModel.SaveDetails}"/>
     </StackPanel>
 </Page>
