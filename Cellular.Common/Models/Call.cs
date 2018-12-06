@@ -1,12 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cellular.Common.Models
 {
     public class Call
     {
-        [Key]
         public int Id { get; set; }
         [ForeignKey(nameof(Caller))]
         public string CallerNumber { get; set; }

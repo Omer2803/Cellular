@@ -1,4 +1,5 @@
 ﻿using Cellular.Common.Invoices;
+using Cellular.Common.Invoices.Models;
 using Cellular.Common.Models;
 using System;
 using System.Collections.Generic;
@@ -28,11 +29,11 @@ namespace Cellular.Server.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult AddCall(Call call)
+        public IHttpActionResult AddCalls(SimulatorCalls calls)
         {
             try
             {
-                simulator.AddCall(call);
+                simulator.SimulateCalls(calls);
             }
             catch (Exception e)
             {
@@ -42,11 +43,11 @@ namespace Cellular.Server.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult AddSMS(SMS sms)
+        public IHttpActionResult AddSMSes(SimulatorSMSes smses)
         {
             try
             {
-                simulator.AddSMS(sms);
+                simulator.SimulateSMSes(smses);
             }
             catch (Exception e)
             {

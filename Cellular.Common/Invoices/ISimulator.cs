@@ -1,12 +1,12 @@
-﻿using Cellular.Common.Models;
+﻿using Cellular.Common.Invoices.Models;
 
 namespace Cellular.Common.Invoices
 {
     public interface ISimulator
     {
-        void AddCall(Call call);
+        void SimulateCalls(SimulatorCalls calls);
 
-        void AddSMS(SMS sms);
+        void SimulateSMSes(SimulatorSMSes smses);
 
         string[] NumbersOf(int clientId);
     }
