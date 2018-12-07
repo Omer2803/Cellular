@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="Cellular.Invoices.Client.UWP.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Cellular.Invoices.Client.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:VMs="using:Cellular.Invoices.Client.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <!--<Page.DataContext>
+        <VMs:LoginViewModel x:Name="ViewModel"/>
+    </Page.DataContext>-->
+    
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+            <TextBlock Text="Welcome To The Invoices Service"/>
+            <TextBox PlaceholderText="ID" Text="{x:Bind ViewModel.Id, Mode=TwoWay}"/>
+            <TextBox PlaceholderText="Password" Text="{x:Bind ViewModel.Password, Mode=TwoWay}"/>
+            <Button Content="Lon in" HorizontalAlignment="Center" Click="{x:Bind ViewModel.TryLogin}"/>
+            <TextBlock HorizontalAlignment="Center" x:Name="messagetbl"/>
+        </StackPanel>
+    </Grid>
+</Page>

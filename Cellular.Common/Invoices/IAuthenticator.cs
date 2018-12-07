@@ -1,7 +1,9 @@
-﻿namespace Cellular.Common.Invoices
+﻿using Cellular.Common.Invoices.Models;
+
+namespace Cellular.Common.Invoices
 {
     public interface IAuthenticator
     {
-        object Login(int id, string password);
+        LoginResult Login(int id, string password);
     }
 }

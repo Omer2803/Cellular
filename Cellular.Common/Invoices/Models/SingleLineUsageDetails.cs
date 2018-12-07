@@ -1,10 +1,12 @@
 ﻿using Cellular.Common.Models;
 
-namespace Cellular.Common.Invoices
+namespace Cellular.Common.Invoices.Models
 {
-    public class SingleLineInvoiceData
+    public class SingleLineUsageDetails
     {
         public string LineNumber { get; set; }
+
+        public ClientTypeEnum ClientType { get; set; }
 
         public Package Package { get; set; }
 

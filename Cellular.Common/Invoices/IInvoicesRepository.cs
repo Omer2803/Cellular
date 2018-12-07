@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Cellular.Common.Invoices.Models;
+using System;
 
 namespace Cellular.Common.Invoices
 {
     public interface IInvoicesRepository
     {
-        SingleLineInvoiceData[] GetClientData(int clintId, DateTime from, DateTime until);
+        SingleLineUsageDetails[] GetClientUsageDetails(int clintId, DateTime from, DateTime until);
     }
 }

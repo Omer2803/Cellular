@@ -77,5 +77,37 @@ namespace DALTests
                 context.SaveChanges();
             }
         }
+
+        [TestMethod]
+        public void AddingClientWithEmployyeId()
+        {
+            using (var context = new CellularDbContext())
+            {
+                var OdedEmp = new Employee
+                {
+                    FirstName = "Oded",
+                    LastName = "Bartov",
+                    Id = 8888,
+                    Password = "22",
+                    Rank = EmployeeRank.CustomerRepresentative
+                };
+
+                var ilanCli = new Client
+                {
+                    RegisteredBy = OdedEmp.Id,
+                    Id = 4646,
+                    FirstName = "Ilan",
+                    LastName = "Rozenfeld",
+                    ClientTypeId = ClientTypeEnum.VIP,
+                    Password = "aaa",
+                    RegisterationDate = DateTime.Now.AddDays(-600)
+                };
+
+                context.Employees.Add(OdedEmp);
+                context.Clients.Add(ilanCli);
+
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Cellular.Common.Invoices.Models;
 
 namespace Cellular.Common.Invoices
 {
     public interface IDALAuthenticator
     {
-        object GetClientOrEmployee(int id, string password);
+        LoginResult GetClientOrEmployee(int id, string password);
     }
 }

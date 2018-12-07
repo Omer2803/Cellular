@@ -14,7 +14,7 @@ namespace Cellular.Simulator.Client.HttpClients
         {
             using (var client = new HttpClient { BaseAddress = uri })
             {
-                var response = await client.GetAsync($"api/simulator/numbersof?clientid={clientId}");
+                var response = await client.GetAsync($"api/simulator/numbersof/{clientId}");
 
                 if (response.IsSuccessStatusCode)
                     return await response.Content.ReadAsAsync<string[]>();

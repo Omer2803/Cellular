@@ -15,6 +15,7 @@ namespace Cellular.Server.Controllers
         }
 
         [HttpGet]
+        [Route("api/simulator/NumbersOf/{clientId}")]
         public IHttpActionResult NumbersOf(int clientId)
         {
             try

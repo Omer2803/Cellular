@@ -1,4 +1,5 @@
 ﻿using Cellular.Common.Invoices;
+using Cellular.Common.Invoices.Models;
 using Cellular.MainDal;
 using System;
 using System.Linq;
@@ -7,10 +8,12 @@ namespace Cellular.Invoices.DAL.Invoices
 {
     public class InvoicesRepository : IInvoicesRepository
     {
-        public SingleLineInvoiceData[] GetClientData(int clintId, DateTime from, DateTime until)
+        public SingleLineUsageDetails[] GetClientUsageDetails(int clintId, DateTime from, DateTime until)
         {
             using (var context = new CellularDbContext())
             {
+                var clientType = context.Clients.Find(clintId).ClientTypeId;
+
                 return context.Lines
                     .Where(l => l.ClientId == clintId)
                     .Select(l => l.PhoneNumber)
@@ -25,9 +28,10 @@ namespace Cellular.Invoices.DAL.Invoices
                     .GroupJoin(context.SMSes.Where(s => s.SendingTime >= from && s.SendingTime <= until),
                                npc => npc.NP.Number,
                                s => s.SenderNumber,
-                               (nps, smses) => new SingleLineInvoiceData
+                               (nps, smses) => new SingleLineUsageDetails
                                {
                                    LineNumber = nps.NP.Number,
+                                   ClientType = clientType,
                                    Package = nps.NP.Package,
                                    Calls = nps.Calls.ToArray(),
                                    SMSes = smses.ToArray()

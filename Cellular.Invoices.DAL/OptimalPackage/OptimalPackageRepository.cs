@@ -7,7 +7,7 @@ namespace Cellular.Invoices.DAL.OptimalPackage
 {
     public class OptimalPackageRepository : IOptimalPackageRepository
     {
-        public SingleLineInvoiceData GetDataOfLine(string lineNumber, DateTime from, DateTime until)
+        public SingleLineUsageDetails GetDataOfLine(string lineNumber, DateTime from, DateTime until)
         {
             using (var context = new CellularDbContext())
             {
@@ -21,7 +21,7 @@ namespace Cellular.Invoices.DAL.OptimalPackage
                     .Where(s => s.SenderNumber == lineNumber && s.SendingTime >= from && s.SendingTime <= until)
                     .ToArray();
 
-                return new SingleLineInvoiceData
+                return new SingleLineUsageDetails
                 {
                     LineNumber = lineNumber,
                     Package = package,
