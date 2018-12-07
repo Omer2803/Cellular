@@ -1,4 +1,5 @@
-﻿using Cellular.CRM.Client.UWP.ViewModels;
+﻿using Cellular.Common.Models;
+using Cellular.CRM.Client.UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,17 +25,16 @@ namespace Cellular.CRM.Client.UWP.Views
     public sealed partial class AddClientView : Page
     {
         public AddClientViewModel AddClientViewModel;
-        private int _employeeId;
+        public ClientTypeEnum clientTypeEnum;
         public AddClientView()
         {
             this.InitializeComponent();
             AddClientViewModel = new AddClientViewModel(this);
-            AddClientViewModel.EmployeeId = _employeeId;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _employeeId = (int)e.Parameter;
+           // AddClientViewModel.EmployeeId = (int)e.Parameter;
         }
     }
 }

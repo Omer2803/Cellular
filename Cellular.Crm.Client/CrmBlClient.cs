@@ -47,12 +47,21 @@ namespace Cellular.CRM.Client
             }
         }
 
-        public Mods.Client SaveClientDetails(Mods.Client clientEdited)
+        public Mods.Client SaveClientDetails(int id, string password, string firstName, string lastName, int registeredBy, Employee registrator)
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(urlServerBase);
                 httpClient.DefaultRequestHeaders.Clear();
+                var clientEdited = new Mods.Client()
+                {
+                    Id = id,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Password = password,
+                    RegisteredBy = registeredBy
+                    
+                };
                 var response = httpClient.PutAsJsonAsync("api/Clients/EditClient", clientEdited).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -116,10 +125,10 @@ namespace Cellular.CRM.Client
                 };
                 httpClient.DefaultRequestHeaders.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = httpClient.PostAsJsonAsync("api/Lines/AddLine", line).Result;
+                var response = httpClient.PostAsJsonAsync("api/Lines/AddNewLine", line).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var responsePack = httpClient.PostAsJsonAsync("api/Lines/AddPackage", package).Result;
+                    var responsePack = httpClient.PostAsJsonAsync("api/Lines/AddNewPackage", package).Result;
                     if (!responsePack.IsSuccessStatusCode)
                         throw new Exception("Couldn't post this object");
                 }
@@ -141,6 +150,39 @@ namespace Cellular.CRM.Client
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;
                     return JsonConvert.DeserializeObject<Mods.Package>(jsonResult);
+
+                }
+            }
+            return null;
+        }
+
+        public Package SavePackageChanges(Package packageEdited)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(urlServerBase);
+                httpClient.DefaultRequestHeaders.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = httpClient.PutAsJsonAsync("api/Lines/EditPackage", packageEdited).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<Mods.Package>(jsonResult);
+                }
+                return null;
+            }
+        }
+
+        public Mods.Client GetClientDetails(int clientId)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(urlServerBase);
+                var response = httpClient.GetAsync($"api/Clients/GetClientDetails?clientId={clientId}").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<Mods.Client>(jsonResult);
 
                 }
             }

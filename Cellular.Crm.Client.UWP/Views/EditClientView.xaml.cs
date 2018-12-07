@@ -34,7 +34,7 @@ namespace Cellular.CRM.Client.UWP.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            editClientViewModel.clientEdited = (Cellular.Common.Models.Client)e.Parameter;
+            editClientViewModel.Id = (int)e.Parameter;
         }
 
         

@@ -6,14 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    
     <StackPanel>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBox Width="150" PlaceholderText="Id" Text="{x:Bind AddClientViewModel.Id,Mode=TwoWay}"/>
+            <TextBlock Text="Client type"/>
+            <ComboBox x:Name="typeCombo" Width="150" ItemsSource="{x:Bind clientTypeEnum}">
+            </ComboBox>
             <TextBox Width="150" PlaceholderText="FirstName" Text="{x:Bind AddClientViewModel.FirstName,Mode=TwoWay}"/>
             <TextBox Width="150" PlaceholderText="LastName" Text="{x:Bind AddClientViewModel.LastName,Mode=TwoWay}"/>
             <TextBox Width="150" PlaceholderText="Password" Text="{x:Bind AddClientViewModel.Password,Mode=TwoWay}"/>
-            <Button Content="Add Client" Click="{x:Bind AddClientViewModel.AddNewClient}">
+            <Button Content="Add Client" CommandParameter="{Binding ElementName=typeCombo,Path=SelectedItem}" Click="{x:Bind AddClientViewModel.AddNewClient}">
             </Button>
         </StackPanel>
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">

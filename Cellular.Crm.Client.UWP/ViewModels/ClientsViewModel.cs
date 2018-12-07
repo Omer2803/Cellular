@@ -60,12 +60,11 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         public void NavigateToAddClientView(object sender, RoutedEventArgs e)
         {
             _page.Frame.Navigate(typeof(AddClientView), EmployeeId);
-
         }
 
         public void NavigateToEditClientView(object sender, RoutedEventArgs e)
         {
-            _page.Frame.Navigate(typeof(EditClientView), ClientSelected);
+            _page.Frame.Navigate(typeof(EditClientView), ClientSelected.Id);
 
         }
 

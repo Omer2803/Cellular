@@ -33,9 +33,10 @@ namespace Cellular.Server.Controllers
                 return BadRequest();
             }
         }
+
         [HttpPost]
-        [Route(Name = "AddLine")]
-        public IHttpActionResult AddLine([FromBody]Line line)
+        [Route("AddNewLine")]
+        public IHttpActionResult AddLine(Line line)
         {
             try
             {
@@ -47,8 +48,9 @@ namespace Cellular.Server.Controllers
                 return BadRequest();
             }
         }
+
         [HttpPost]
-        [Route(Name = "AddPackage")]
+        [Route("AddNewPackage")]
         public IHttpActionResult AddPackage([FromBody]Package package)
         {
             try
@@ -62,18 +64,18 @@ namespace Cellular.Server.Controllers
             }
         }
 
-        [HttpPost]
-        [Route(Name = "EditPackage")]
+        [HttpPut]
+        [Route("EditPackage")]
         public IHttpActionResult EditPackage([FromBody]Package package)
         {
             try
             {
                 var packagEdited = _linesManager.EditPackage(package);
-                return Ok();
+                return Ok(packagEdited);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
         [HttpGet]

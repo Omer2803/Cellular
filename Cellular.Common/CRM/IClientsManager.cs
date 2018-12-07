@@ -7,7 +7,7 @@ namespace Cellular.Common.CRM
     {
         void AddClient(Client client);
 
-        void EditClient(Client client);
+        Client EditClient(Client client);
 
         void DeleteClient(int ClientId);
         Client GetClientById(int id);

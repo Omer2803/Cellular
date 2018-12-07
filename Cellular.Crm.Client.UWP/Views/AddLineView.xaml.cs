@@ -24,7 +24,6 @@ namespace Cellular.CRM.Client.UWP.Views
     public sealed partial class AddLineView : Page
     {
         public AddLineViewModel AddLineViewModel;
-        //public int ClientId { get; set; }
         public AddLineView()
         {
             this.InitializeComponent();
@@ -34,7 +33,7 @@ namespace Cellular.CRM.Client.UWP.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             AddLineViewModel.ClientId = (int)e.Parameter;
-            
         }
+        
     }
 }

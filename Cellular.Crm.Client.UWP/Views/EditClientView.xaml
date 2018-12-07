@@ -6,13 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" DataContext="{x:Bind editClientViewModel.clientEdited,Mode=TwoWay}" >
-        <TextBox Width="150" Text="{Binding Id}"  />
-        <TextBox Width="150" Text="{Binding FirstName}"/>
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBox Width="150" Text="{x:Bind editClientViewModel.Id}" IsReadOnly="True" />
+        <TextBox  Width="150" Text="{x:Bind editClientViewModel.FirstName,Mode=TwoWay}"/>
+        <TextBox Width="150" Text="{x:Bind editClientViewModel.LastName,Mode=TwoWay}"/>
+        <TextBox Width="150" Text="{x:Bind editClientViewModel.Password,Mode=TwoWay}"/>
+        <TextBox Width="150" Text="{x:Bind editClientViewModel.RegisteredBy,Mode=TwoWay}" IsReadOnly="True"/>
+        <Button Content="Save details" Width="100"  Click="{x:Bind editClientViewModel.SaveDetails}"/>
+    </StackPanel>
+    <!--<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" DataContext="{x:Bind editClientViewModel.clientEdited,Mode=TwoWay}" >
+        <TextBox Width="150" Text="{Binding Id}" IsReadOnly="True" />
+        <TextBox  Width="150" Text="{Binding FirstName}"/>
         <TextBox Width="150" Text="{Binding LastName}"/>
         <TextBox Width="150" Text="{Binding RegisterationDate}"/>
         <TextBox Width="150" Text="{Binding ClientTypeId}"/>
-        <Button Content="Save details" Width="100" Click="{x:Bind editClientViewModel.SaveDetails}"/>
-    </StackPanel>
+        <Button Content="Save details" Width="100"  Click="{x:Bind editClientViewModel.SaveDetails}">
+        </Button>
+    </StackPanel>-->
 </Page>
