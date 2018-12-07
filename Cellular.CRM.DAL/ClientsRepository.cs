@@ -30,14 +30,16 @@ namespace Cellular.CRM.DAL
             }
         }
 
-        public void EditClient(Client client)
+        public Client EditClient(Client client)
         {
             using (var db = new CellularDbContext())
             {
                 var clientEdited = db.Clients.FirstOrDefault(c => c.Id == client.Id);
-                clientEdited = client;
-                db.Entry(client).State = System.Data.Entity.EntityState.Modified;
+                clientEdited.FirstName = client.FirstName;
+                clientEdited.LastName = client.LastName;
+                clientEdited.Password = client.Password;
                 db.SaveChanges();
+                return clientEdited;
             }
         }
 

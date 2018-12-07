@@ -11,7 +11,7 @@ namespace Cellular.Common.CRM
 
         void DeleteClient(int clientId);
 
-        void EditClient(Client client);
+        Client EditClient(Client client);
         List<Client> GetAllClients();
     }
 }

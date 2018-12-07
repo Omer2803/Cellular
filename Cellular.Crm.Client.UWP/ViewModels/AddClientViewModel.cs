@@ -1,4 +1,5 @@
-﻿using Cellular.CRM.Client.UWP.Views;
+﻿using Cellular.Common.Models;
+using Cellular.CRM.Client.UWP.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,18 +16,24 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         private readonly Page page;
         private CrmBlClient _crmBlClient;
 
+
+        public int EmployeeId { get; set; }
+        
+
+        private ClientTypeEnum _clientTypeId;
+
+        public ClientTypeEnum ClientTypeId
+        {
+            get { return _clientTypeId; }
+            set { _clientTypeId = value; Notify(nameof(ClientTypeId)); }
+        }
+
+
         private int _id;
         public int Id
         {
             get { return _id; }
             set { _id = value; Notify(nameof(Id)); }
-        }
-
-        private int _employeeId;
-        public int EmployeeId
-        {
-            get { return _employeeId; }
-            set { _employeeId = value; Notify(nameof(EmployeeId)); }
         }
 
         private string _firstName;
@@ -77,10 +84,11 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             _crmBlClient = new CrmBlClient();
         }
 
-        public void AddNewClient(object sender,RoutedEventArgs e)
+        public void AddNewClient(object sender, RoutedEventArgs e)
         {
             try
             {
+                ClientTypeId = (ClientTypeEnum)((Button)sender).CommandParameter;
                 _crmBlClient.AddNewClient(Id, LastName, FirstName, Password, EmployeeId);
                 page.Frame.Navigate(typeof(ClientsView), EmployeeId);
 

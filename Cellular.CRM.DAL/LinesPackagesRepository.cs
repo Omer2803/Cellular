@@ -54,18 +54,19 @@ namespace Cellular.CRM.DAL
             using (var db = new CellularDbContext())
             {
                 var packageEdited = db.Packages.FirstOrDefault(p => p.Id == package.Id);
-                packageEdited = package;
-                db.Entry(package).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(packageEdited).CurrentValues.SetValues(package);
                 db.SaveChanges();
                 return packageEdited;
             }
         }
 
-        public Line[] GetLinesOfClient(int clientId)
+       
+
+        public List<Line> GetLinesOfClient(int clientId)
         {
             using (var db = new CellularDbContext())
             {
-                return db.Lines.Where(l => l.ClientId == clientId).ToArray();
+                return db.Lines.Where(l => l.ClientId == clientId).ToList();
             }
         }
 

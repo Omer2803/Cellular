@@ -17,7 +17,6 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         private Page _page;
         private CrmBlClient _crmBlClient;
 
-
         public ClientsViewModel(Page page)
         {
             _page = page;
@@ -25,12 +24,12 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             GetAllClients();
         }
 
-        private void GetAllClients()
+        private  void GetAllClients()
         {
             var listCliens = _crmBlClient.GetAllClients();
             if (listCliens != null)
             {
-                Clients = new ObservableCollection<Common.Models.Client>();
+                Clients = new ObservableCollection<Common.Models.Client>(listCliens);
             }
         }
 
@@ -56,10 +55,22 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             get { return _employeeId; }
             set { _employeeId = value; Notify(nameof(EmployeeId)); }
         }
+        public Cellular.Common.Models.Client ClientSelected { get; set; }
 
         public void NavigateToAddClientView(object sender, RoutedEventArgs e)
         {
             _page.Frame.Navigate(typeof(AddClientView), EmployeeId);
+        }
+
+        public void NavigateToEditClientView(object sender, RoutedEventArgs e)
+        {
+            _page.Frame.Navigate(typeof(EditClientView), ClientSelected.Id);
+
+        }
+
+        public void NavigateToAddLineView(object sender, RoutedEventArgs e)
+        {
+            _page.Frame.Navigate(typeof(AddLineView), ClientSelected.Id);
 
         }
 

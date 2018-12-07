@@ -23,7 +23,6 @@ namespace Cellular.Server.Controllers
 
         [HttpGet]
         [Route("LoginEmployee")]
-        [AcceptVerbs("GET", "POST")]
         public IHttpActionResult LoginEmployee(int id, string password)
         {
             try
@@ -39,7 +38,6 @@ namespace Cellular.Server.Controllers
 
         [HttpPost]
         [Route("AddClient")]
-        [AcceptVerbs("GET", "POST")]
         public IHttpActionResult AddClient([FromBody]Client client)
         {
             try
@@ -69,7 +67,7 @@ namespace Cellular.Server.Controllers
 
         
         [HttpGet]
-        [AcceptVerbs("GET", "POST")]
+        [Route("GetClientDetails")]
         public IHttpActionResult GetClientDetails(int clientId)
         {
             try
@@ -82,8 +80,8 @@ namespace Cellular.Server.Controllers
                 return BadRequest();
             }
         }
+
         [HttpGet]
-        [AcceptVerbs("GET", "POST")]
         [Route("GetAllClients")]
         public IHttpActionResult GetAllClients()
         {
@@ -98,17 +96,18 @@ namespace Cellular.Server.Controllers
             }
         }
 
-        //[HttpPut]
-        public IHttpActionResult EditClient(Client client)
+        [HttpPut]
+        [Route("EditClient")]
+        public IHttpActionResult EditClient([FromBody]Client client)
         {
             try
             {
-                 _clientsManager.EditClient(client);
-                return Ok(client);
+                 var clientEdited =_clientsManager.EditClient(client);
+                return Ok(clientEdited);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 

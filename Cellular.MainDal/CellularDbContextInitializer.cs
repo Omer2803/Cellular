@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace Cellular.MainDal
 {
-    class CellularDbContextInitializer : DropCreateDatabaseIfModelChanges<CellularDbContext>
+    class CellularDbContextInitializer : DropCreateDatabaseAlways<CellularDbContext>
     {
         protected override void Seed(CellularDbContext context)
         {
@@ -46,6 +46,7 @@ namespace Cellular.MainDal
                 LastName = "Dolev",
                 Password = "1",
                 RegisteredBy = 3121,
+                Registrator = emp,
                 RegisterationDate = DateTime.Now
             };
             var client2 = new Client()
@@ -56,6 +57,7 @@ namespace Cellular.MainDal
                 LastName = "Hadad",
                 Password = "1",
                 RegisteredBy = 3121,
+                Registrator = emp,
                 RegisterationDate = DateTime.Now
 
             };

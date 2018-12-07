@@ -19,11 +19,28 @@ namespace Cellular.Server.Controllers
             this._linesManager = linesManager;
         }
 
-        public IHttpActionResult AddLine(int clientId, Line line)
+        [HttpGet]
+        [Route("GetLinesByClientId")]
+        public IHttpActionResult GetLinesByClientId(int clientId)
         {
             try
             {
-                _linesManager.AddLine(clientId, line);
+               List<Line> lines= _linesManager.GetLinesByClientId(clientId);
+                return Ok(lines);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("AddNewLine")]
+        public IHttpActionResult AddLine(Line line)
+        {
+            try
+            {
+                _linesManager.AddLine(line);
                 return Ok();
             }
             catch (Exception)
@@ -31,8 +48,9 @@ namespace Cellular.Server.Controllers
                 return BadRequest();
             }
         }
+
         [HttpPost]
-        [Route(Name = "AddPackage")]
+        [Route("AddNewPackage")]
         public IHttpActionResult AddPackage([FromBody]Package package)
         {
             try
@@ -45,18 +63,33 @@ namespace Cellular.Server.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost]
-        [Route(Name = "EditPackage")]
+
+        [HttpPut]
+        [Route("EditPackage")]
         public IHttpActionResult EditPackage([FromBody]Package package)
         {
             try
             {
                 var packagEdited = _linesManager.EditPackage(package);
-                return Ok();
+                return Ok(packagEdited);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetPackageOfLine")]
+        public IHttpActionResult GetPackageOfLine(string lineNumber)
+        {
+            try
+            {
+                var packageOfLine = _linesManager.GetPackageOfLine(lineNumber);
+                return Ok(packageOfLine);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 

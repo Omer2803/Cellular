@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
    
-        
-    
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+    <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="ID"/>
             <TextBox Width="100" Text="{x:Bind LoginViewModel.Id,Mode=TwoWay}" />
@@ -24,4 +24,5 @@
             </Button>
         </StackPanel>
     </StackPanel>
+   
 </Page>

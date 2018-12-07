@@ -42,7 +42,10 @@ namespace Cellular.Server
 
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
-            
+
+//            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
+//.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All;
+
         }
     }
 }
