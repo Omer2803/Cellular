@@ -25,17 +25,13 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <CheckBox Content="IncludesPackage" IsChecked="{x:Bind AddLineViewModel.IncludesPackage,Mode=TwoWay}"/>
             </StackPanel>
-            <!--<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                <TextBlock Text="Select Package"/>
-                <ComboBox></ComboBox>
-            </StackPanel>-->
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <CheckBox Content="IncludesMinutes" IsChecked="{x:Bind AddLineViewModel.IncludesMiutes,Mode=TwoWay}"/>
-                <TextBox PlaceholderText="Minutes" TextChanged="{x:Bind AddLineViewModel.RaiseMinutesPriceToTotalPrice}" Text="{x:Bind AddLineViewModel.MaxMinutes,Mode=TwoWay}"/>
+                <TextBox PlaceholderText="Minutes" Text="{x:Bind AddLineViewModel.MaxMinutes,Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <CheckBox Content="IncludesSms" IsChecked="{x:Bind AddLineViewModel.IncludesSms,Mode=TwoWay}"/>
-                <TextBox TextChanged="{x:Bind AddLineViewModel.RaiseSmsPriceToTotalPrice}" PlaceholderText="SMS" Text="{x:Bind AddLineViewModel.MaxSms,Mode=TwoWay}"/>
+                <TextBox  PlaceholderText="SMS" Text="{x:Bind AddLineViewModel.MaxSms,Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <CheckBox Checked="{x:Bind AddLineViewModel.RaiseFriendsPriceToTotalPrice}" Unchecked="{x:Bind AddLineViewModel.DecraseFriendsPriceToTotalPrice}" Content="IncludesFriends" IsChecked="{x:Bind AddLineViewModel.IncludesFriends,Mode=TwoWay}"/>
@@ -47,8 +43,10 @@
                 <TextBox IsReadOnly="True" PlaceholderText="Total Price" Text="{x:Bind AddLineViewModel.TotalPrice,Mode=TwoWay}"></TextBox>
             </StackPanel>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                <Button Content="Add" Click="{x:Bind AddLineViewModel.AddLine}"></Button>
+                <Button Content="Add" Click="{x:Bind AddLineViewModel.AddLine}" CommandParameter="{Binding ElementName=linesCombo,Path=SelectedItem}"></Button>
                 <Button Content="Save" CommandParameter="{Binding ElementName=linesCombo,Path=SelectedItem}" Click="{x:Bind AddLineViewModel.SavePackageChanges}"/>
+                <Button Content="Clear" Click="{x:Bind AddLineViewModel.ClearProperties}"/>
+                <Button Content="Back" Click="{x:Bind AddLineViewModel.NavigateToClientsView}"/>
             </StackPanel>
             <TextBlock Text="{x:Bind AddLineViewModel.Error,Mode=TwoWay}" Foreground="Red"></TextBlock>
         </StackPanel>

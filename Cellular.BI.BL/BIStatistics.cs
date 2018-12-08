@@ -10,31 +10,31 @@ namespace Cellular.BI.BL
 {
     public class BIStatistics : IBIStatistics
     {
-        private readonly IBIRepository bIRepository;
+        private readonly IBIRepository _bIRepository;
 
         public BIStatistics(IBIRepository bIRepository)
         {
-            this.bIRepository = bIRepository;
+            this._bIRepository = bIRepository;
         }
 
-        public Employee[] BestSellers()
+        public Dictionary<int, int> BestSellers()
         {
-            throw new NotImplementedException();
+            return _bIRepository.BestSellers();
         }
 
-        public Client[] MostCallingToServiceCenter()
+        public Dictionary<string, int> MostCallingToServiceCenter()
         {
-            throw new NotImplementedException();
+            return _bIRepository.MostCallingToServiceCenter();
         }
 
-        public Client[] MostProfitableClients()
+        public Dictionary<Client, double> MostProfitableClients()
         {
-            throw new NotImplementedException();
+            return _bIRepository.MostProfitableClients();
         }
 
         public Client[] PotentialFriendsGroups()
         {
-            throw new NotImplementedException();
+            return _bIRepository.PotentialFriendsGroups();
         }
     }
 }

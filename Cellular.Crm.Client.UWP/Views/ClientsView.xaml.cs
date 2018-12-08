@@ -33,7 +33,10 @@ namespace Cellular.CRM.Client.UWP.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ClientsViewModel.EmployeeId = (int)e.Parameter;
+            if (e.Parameter != null)
+            {
+                ClientsViewModel.EmployeeId = (int)e.Parameter;
+            }
         }
     }
 }

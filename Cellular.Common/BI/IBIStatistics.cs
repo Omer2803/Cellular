@@ -1,14 +1,15 @@
 ﻿using Cellular.Common.Models;
+using System.Collections.Generic;
 
 namespace Cellular.Common.BI
 {
     public interface IBIStatistics
     {
-        Client[] MostProfitableClients();
+        Dictionary<Client, double> MostProfitableClients();
 
-        Client[] MostCallingToServiceCenter();
+        Dictionary<string, int> MostCallingToServiceCenter();
 
-        Employee[] BestSellers();
+        Dictionary<int, int> BestSellers();
 
         Client[] PotentialFriendsGroups();
     }

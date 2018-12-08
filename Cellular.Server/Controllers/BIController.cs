@@ -17,8 +17,9 @@ namespace Cellular.Server.Controllers
         {
             this._bIStatistics = bIStatistics;
         }
-        //[HttpGet]
-        [Route(Name = "GetBestSellers")]
+
+        [HttpGet]
+        [Route("GetBestSellers")]
         public IHttpActionResult GetBestSellers()
         {
             try
@@ -31,8 +32,9 @@ namespace Cellular.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //[HttpGet]
-        [Route(Name = "GetMostCallingToServiceCenter")]
+
+        [HttpGet]
+        [Route("GetMostCallingToServiceCenter")]
         public IHttpActionResult GetMostCallingToServiceCenter()
         {
             try
@@ -45,8 +47,9 @@ namespace Cellular.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //[HttpGet]
-        [Route(Name = "GetMostProfitableClients")]
+
+        [HttpGet]
+        [Route("GetMostProfitableClients")]
         public IHttpActionResult GetMostProfitableClients()
         {
             try
@@ -59,8 +62,9 @@ namespace Cellular.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //[HttpGet]
-        [Route(Name = "GetPotentialFriendsGroups")]
+
+        [HttpGet]
+        [Route("GetPotentialFriendsGroups")]
         public IHttpActionResult GetPotentialFriendsGroups()
         {
             try
