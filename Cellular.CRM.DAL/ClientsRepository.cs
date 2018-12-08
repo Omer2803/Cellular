@@ -38,6 +38,7 @@ namespace Cellular.CRM.DAL
                 clientEdited.FirstName = client.FirstName;
                 clientEdited.LastName = client.LastName;
                 clientEdited.Password = client.Password;
+                clientEdited.ClientTypeId = client.ClientTypeId;
                 db.SaveChanges();
                 return clientEdited;
             }

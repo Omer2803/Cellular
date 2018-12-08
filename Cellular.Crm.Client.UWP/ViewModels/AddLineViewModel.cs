@@ -1,4 +1,5 @@
 ﻿using Cellular.Common.Models;
+using Cellular.CRM.Client.UWP.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,7 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public int ClientId { get; set; }
 
-        #region PackageAndLine
+        #region PackageAndLineProperties
 
         private List<Line> _lines;
         public List<Line> Lines
@@ -48,8 +49,35 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             set { _totalPrice = value; Notify(nameof(TotalPrice)); }
         }
 
-        public int MaxMinutes { get; set; }
+        private int _maxMinutes;
+        public int MaxMinutes
+        {
+            get { return _maxMinutes; }
+            set
+            {
+                if (!int.TryParse(value.ToString(), out _maxMinutes))
+                {
+                    _maxMinutes = 0;
+                };
+                CalculateTotalPrice();
+                Notify(nameof(MaxMinutes));
+            }
+        }
 
+        private int _maxSms;
+        public int MaxSms
+        {
+            get { return _maxSms; }
+            set
+            {
+                if (!int.TryParse(value.ToString(), out _maxSms))
+                {
+                    _maxSms = 0;
+                };
+                CalculateTotalPrice();
+                Notify(nameof(MaxSms));
+            }
+        }
 
         private bool _includesMiutes;
         public bool IncludesMiutes
@@ -65,7 +93,6 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             set { _includesSms = value; Notify(nameof(IncludesSms)); }
         }
 
-        public int MaxSms { get; set; }
         public int PackageId { get; set; }
 
         private string _error;
@@ -75,8 +102,6 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             get { return _error; }
             set { _error = value; Notify(nameof(Error)); }
         }
-
-
 
         private bool _includesFriends;
         public bool IncludesFriends
@@ -122,14 +147,24 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         public void AddLine(object sender, RoutedEventArgs e)
         {
             Package package = null;
+            Line lineSelected = (Line)((Button)sender).CommandParameter;
+            if (lineSelected == null)
+            {
+                lineSelected = new Line()
+                {
+                    PhoneNumber = PhoneNumber,
+                    ClientId = ClientId
+                };
+            }
             if (IncludesPackage)
             {
                 package = AddPackageToLine();
             }
             try
             {
-                _crmBlClient.AddNewLine(PhoneNumber, ClientId, package);
+                _crmBlClient.AddNewLinePlusPackage(lineSelected, package);
                 InitSuccussMessage();
+                _page.Frame.Navigate(typeof(ClientsView));
             }
             catch (Exception ex)
             {
@@ -142,6 +177,8 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         {
             MessageDialog messageDialog = new MessageDialog("The line and package added successfully");
             await messageDialog.ShowAsync();
+            //Lines =_crmBlClient.GetLinesByClientId(ClientId);
+
         }
 
         public void GetPackageOfLine(object sender, SelectionChangedEventArgs e)
@@ -188,20 +225,9 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             TotalPrice = 0;
         }
 
-        public void RaiseMinutesPriceToTotalPrice(object sender, TextChangedEventArgs e)
+        public void ClearProperties(object sender, RoutedEventArgs e)
         {
-            CalculateTotalPrice();
-            //double priceMinutes = 0;
-            //priceMinutes = (double)MaxMinutes / 2;
-            //TotalPrice += priceMinutes;
-        }
-
-        public void RaiseSmsPriceToTotalPrice(object sender, TextChangedEventArgs e)
-        {
-            CalculateTotalPrice();
-            //double priceSms = 0;
-            //priceSms = (double)MaxSms / 2;
-            //TotalPrice += priceSms;
+            SetPropertiesDefault();
         }
 
         public void RaiseFriendsPriceToTotalPrice(object sender, RoutedEventArgs e)
@@ -281,5 +307,11 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             }
 
         }
+
+        public void NavigateToClientsView(object sender, RoutedEventArgs e)
+        {
+            _page.Frame.Navigate(typeof(ClientsView));
+        }
+
     }
 }

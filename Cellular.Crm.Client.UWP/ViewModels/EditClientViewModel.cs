@@ -16,6 +16,7 @@ namespace Cellular.CRM.Client.UWP.ViewModels
     {
         private readonly Page _page;
         private CrmBlClient _crmBlClient;
+        #region ClientProperties
         public Cellular.Common.Models.Client clientEdited { get; set; }
 
         private int _id;
@@ -46,6 +47,16 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             LastName = clientEdited.LastName;
             Password = clientEdited.Password;
             RegisteredBy = clientEdited.RegisteredBy;
+            ClientTypeId = clientEdited.ClientTypeId;
+        }
+
+
+        private ClientTypeEnum _clientTypeId;
+
+        public ClientTypeEnum ClientTypeId
+        {
+            get { return _clientTypeId; }
+            set { _clientTypeId = value; }
         }
 
         private string _firstName;
@@ -81,14 +92,13 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             set { _error = value; Notify(nameof(Error)); }
         }
 
-
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void Notify(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+        #endregion
 
         public EditClientViewModel(Page page)
         {
@@ -98,14 +108,23 @@ namespace Cellular.CRM.Client.UWP.ViewModels
 
         public void SaveDetails(object sender, RoutedEventArgs e)
         {
-           var succesEdited = _crmBlClient.SaveClientDetails(Id,Password,FirstName,LastName,RegisteredBy, Registrator);
-            if (succesEdited != null)
+            try
             {
-                InitSuccussMessage();
+                ClientTypeId = (ClientTypeEnum)((Button)sender).CommandParameter;
+                var succesEdited = _crmBlClient.SaveClientDetails(Id, Password, FirstName, LastName, RegisteredBy, ClientTypeId);
+                if (succesEdited != null)
+                {
+                    InitSuccussMessage();
+                }
+                else
+                {
+                    Error = "The edit client failed";
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                Error = "The edit client failed";
+                Error = ex.Message;
             }
         }
 
@@ -113,6 +132,11 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         {
             MessageDialog messageDialog = new MessageDialog("The client updated successfully");
             await messageDialog.ShowAsync();
+            _page.Frame.Navigate(typeof(ClientsView), RegisteredBy);
+        }
+
+        public void NavigateToClientsView(object sender, RoutedEventArgs e)
+        {
             _page.Frame.Navigate(typeof(ClientsView));
         }
     }

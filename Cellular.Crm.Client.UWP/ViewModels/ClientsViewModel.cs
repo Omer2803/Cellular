@@ -24,7 +24,7 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             GetAllClients();
         }
 
-        private  void GetAllClients()
+        private void GetAllClients()
         {
             var listCliens = _crmBlClient.GetAllClients();
             if (listCliens != null)
@@ -64,13 +64,19 @@ namespace Cellular.CRM.Client.UWP.ViewModels
 
         public void NavigateToEditClientView(object sender, RoutedEventArgs e)
         {
-            _page.Frame.Navigate(typeof(EditClientView), ClientSelected.Id);
-
+            if (ClientSelected != null)
+            {
+                _page.Frame.Navigate(typeof(EditClientView), ClientSelected.Id);
+            }
         }
 
         public void NavigateToAddLineView(object sender, RoutedEventArgs e)
         {
-            _page.Frame.Navigate(typeof(AddLineView), ClientSelected.Id);
+            if (ClientSelected != null)
+            {
+                _page.Frame.Navigate(typeof(AddLineView), ClientSelected.Id);
+
+            }
 
         }
 

@@ -7,20 +7,33 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBox Width="150" Text="{x:Bind editClientViewModel.Id}" IsReadOnly="True" />
-        <TextBox  Width="150" Text="{x:Bind editClientViewModel.FirstName,Mode=TwoWay}"/>
-        <TextBox Width="150" Text="{x:Bind editClientViewModel.LastName,Mode=TwoWay}"/>
-        <TextBox Width="150" Text="{x:Bind editClientViewModel.Password,Mode=TwoWay}"/>
-        <TextBox Width="150" Text="{x:Bind editClientViewModel.RegisteredBy,Mode=TwoWay}" IsReadOnly="True"/>
-        <Button Content="Save details" Width="100"  Click="{x:Bind editClientViewModel.SaveDetails}"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Id"></TextBlock>
+            <TextBox Width="150" Text="{x:Bind editClientViewModel.Id}" IsReadOnly="True" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Client type"></TextBlock>
+            <ComboBox Width="150" Name="typeCombo" SelectedItem="{x:Bind editClientViewModel.ClientTypeId}"></ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="First name"/>
+            <TextBox  Width="150" Text="{x:Bind editClientViewModel.FirstName,Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Last name"/>
+            <TextBox Width="150" Text="{x:Bind editClientViewModel.LastName,Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Password"/>
+            <TextBox Width="150" Text="{x:Bind editClientViewModel.Password,Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Registered by Id"/>
+            <TextBox Width="150" Text="{x:Bind editClientViewModel.RegisteredBy,Mode=TwoWay}" IsReadOnly="True"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">        
+            <Button Content="Save details" Width="100" CommandParameter="{Binding ElementName=typeCombo,Path=SelectedItem}"  Click="{x:Bind editClientViewModel.SaveDetails}"/>
+            <Button Content="Back" Click="{x:Bind editClientViewModel.NavigateToClientsView}"/>
+        </StackPanel>
     </StackPanel>
-    <!--<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" DataContext="{x:Bind editClientViewModel.clientEdited,Mode=TwoWay}" >
-        <TextBox Width="150" Text="{Binding Id}" IsReadOnly="True" />
-        <TextBox  Width="150" Text="{Binding FirstName}"/>
-        <TextBox Width="150" Text="{Binding LastName}"/>
-        <TextBox Width="150" Text="{Binding RegisterationDate}"/>
-        <TextBox Width="150" Text="{Binding ClientTypeId}"/>
-        <Button Content="Save details" Width="100"  Click="{x:Bind editClientViewModel.SaveDetails}">
-        </Button>
-    </StackPanel>-->
 </Page>

@@ -43,9 +43,9 @@ namespace Cellular.Server.Controllers
                 _linesManager.AddLine(line);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -78,6 +78,7 @@ namespace Cellular.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet]
         [Route("GetPackageOfLine")]
         public IHttpActionResult GetPackageOfLine(string lineNumber)

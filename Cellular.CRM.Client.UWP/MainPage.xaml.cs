@@ -29,7 +29,6 @@ namespace Cellular.CRM.Client.UWP
         {
             this.InitializeComponent();
             LoginViewModel = new LoginViewModel(this);
-           
         }
         
     }

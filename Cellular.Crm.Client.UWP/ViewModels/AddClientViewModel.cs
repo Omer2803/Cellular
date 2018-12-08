@@ -18,7 +18,9 @@ namespace Cellular.CRM.Client.UWP.ViewModels
 
 
         public int EmployeeId { get; set; }
-        
+
+        public Employee Registrator { get; set; }
+
 
         private ClientTypeEnum _clientTypeId;
 
@@ -89,7 +91,7 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             try
             {
                 ClientTypeId = (ClientTypeEnum)((Button)sender).CommandParameter;
-                _crmBlClient.AddNewClient(Id, LastName, FirstName, Password, EmployeeId);
+                _crmBlClient.AddNewClient(Id, LastName, FirstName, Password, EmployeeId, ClientTypeId);
                 page.Frame.Navigate(typeof(ClientsView), EmployeeId);
 
             }
@@ -97,6 +99,11 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             {
                 Error = ex.Message;
             }
+        }
+
+        public void NavigateToClientsView(object sender, RoutedEventArgs e)
+        {
+            page.Frame.Navigate(typeof(ClientsView));
         }
     }
 }

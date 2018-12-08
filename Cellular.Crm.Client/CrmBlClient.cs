@@ -47,7 +47,7 @@ namespace Cellular.CRM.Client
             }
         }
 
-        public Mods.Client SaveClientDetails(int id, string password, string firstName, string lastName, int registeredBy, Employee registrator)
+        public Mods.Client SaveClientDetails(int id, string password, string firstName, string lastName, int registeredBy, ClientTypeEnum clientTypeId)
         {
             using (var httpClient = new HttpClient())
             {
@@ -59,8 +59,9 @@ namespace Cellular.CRM.Client
                     FirstName = firstName,
                     LastName = lastName,
                     Password = password,
-                    RegisteredBy = registeredBy
-                    
+                    RegisteredBy = registeredBy,
+                    ClientTypeId = clientTypeId
+
                 };
                 var response = httpClient.PutAsJsonAsync("api/Clients/EditClient", clientEdited).Result;
                 if (response.IsSuccessStatusCode)
@@ -90,7 +91,7 @@ namespace Cellular.CRM.Client
 
         }
 
-        public void AddNewClient(int id, string lastName, string firstName, string password, int employeeId)
+        public void AddNewClient(int id, string lastName, string firstName, string password, int employeeId, ClientTypeEnum clientTypeId)
         {
             using (var httpClient = new HttpClient())
             {
@@ -102,7 +103,9 @@ namespace Cellular.CRM.Client
                     LastName = lastName,
                     Password = password,
                     RegisterationDate = DateTime.Now,
-                    RegisteredBy = employeeId
+                    RegisteredBy = employeeId,
+                    ClientTypeId = clientTypeId
+
                 };
                 httpClient.DefaultRequestHeaders.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -113,28 +116,26 @@ namespace Cellular.CRM.Client
 
         }
 
-        public void AddNewLine(string phoneNumber, int clientId, Package package)
+        public void AddNewLinePlusPackage(Line line, Package package)
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(urlServerBase);
-                var line = new Common.Models.Line()
-                {
-                    PhoneNumber = phoneNumber,
-                    ClientId = clientId
-                };
                 httpClient.DefaultRequestHeaders.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                if (line == null)
+                    return;
                 var response = httpClient.PostAsJsonAsync("api/Lines/AddNewLine", line).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    if (package == null)
+                        return;
                     var responsePack = httpClient.PostAsJsonAsync("api/Lines/AddNewPackage", package).Result;
                     if (!responsePack.IsSuccessStatusCode)
                         throw new Exception("Couldn't post this object");
                 }
                 else
                 {
-
                     throw new Exception("Couldn't post this object");
                 }
             }
