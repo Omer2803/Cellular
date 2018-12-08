@@ -3,8 +3,8 @@ using Cellular.Invoices.Client.HttpClients;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cellular.Invoices.Client.ViewModels
@@ -22,15 +22,13 @@ namespace Cellular.Invoices.Client.ViewModels
         private async void SetClientId(int value)
         {
             clientId = value;
-            Numbers = await httpClient.NumbersOf(value);
+            //Numbers = await httpClient.NumbersOf(value);
         }
 
-        public List<string> SelectedNumbers { get; set; }
+        //public DateTimeOffset From { get; set; }
+        //public DateTimeOffset Until { get; set; }
 
-        public DateTimeOffset From { get; set; }
-
-        public DateTimeOffset Until { get; set; }
-
+        public int Year { get; set; }
         public int Month { get; set; }
 
         private bool isEmployee;
@@ -44,20 +42,23 @@ namespace Cellular.Invoices.Client.ViewModels
             }
         }
 
-        private string[] numbers;
-        public string[] Numbers
-        {
-            get => numbers;
-            set
-            {
-                numbers = value;
-                Notify();
-            }
-        }
+        //private string[] numbers;
+        //public string[] Numbers
+        //{
+        //    get => numbers;
+        //    set
+        //    {
+        //        numbers = value;
+        //        Notify();
+        //    }
+        //}
+        //public List<string> SelectedNumbers { get; set; }
+
+        public int[] Months { get; } = Enumerable.Range(1, 12).ToArray();
 
         public async Task GetInvoice()
         {
-            var invoice = await httpClient.GetInvoice(ClientId, From.Date, Until.Date);
+            var invoice = await httpClient.GetInvoice(ClientId, new DateTime(Year, Month, 1)/*From.Date*/, new DateTime(Year, Month, 1).AddMonths(1)/*Until.Date*/);
             GotInvoice?.Invoke(invoice);
         }
 

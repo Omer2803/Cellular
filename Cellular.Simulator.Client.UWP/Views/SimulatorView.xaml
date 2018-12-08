@@ -50,7 +50,7 @@
                     HorizontalAlignment="Center"
                     IsEnabled="{x:Bind ViewModel.CanSimulate, Mode=OneWay}"/>
 
-            <TextBlock Name="messagetbl"/>
+            <TextBlock Name="messagetbl" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Page>

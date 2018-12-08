@@ -15,10 +15,17 @@
                 <TextBox Text="{x:Bind ViewModel.ClientId, Mode=TwoWay}"/>
             </StackPanel>
             
-            <ComboBox Header="Numbers:" ItemsSource="{x:Bind ViewModel.Numbers, Mode=OneWay}"/>
+            <!--<ComboBox Header="Numbers:" ItemsSource="{x:Bind ViewModel.Numbers, Mode=OneWay}"/>d-->
 
-            <DatePicker Date="{x:Bind ViewModel.From, Mode=TwoWay}" Header="Start Date:"/>
-            <DatePicker Date="{x:Bind ViewModel.Until, Mode=TwoWay}" Header="End Date:"/>
+            <!--<DatePicker Date="{x:Bind ViewModel.From, Mode=TwoWay}" Header="Start Date:"/>
+            <DatePicker Date="{x:Bind ViewModel.Until, Mode=TwoWay}" Header="End Date:"/>-->
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="Year:"/>
+                <TextBox Text="{x:Bind ViewModel.Year, Mode=TwoWay}" Margin="0,0,15,0"/>
+                <TextBlock Text="Month:"/>
+                <ComboBox ItemsSource="{x:Bind ViewModel.Months}" SelectedItem="{x:Bind ViewModel.Month, Mode=TwoWay}"/>
+            </StackPanel>
 
             <Button Content="Calculate" HorizontalAlignment="Center" Click="{x:Bind ViewModel.GetInvoice}"/>
         </StackPanel>
