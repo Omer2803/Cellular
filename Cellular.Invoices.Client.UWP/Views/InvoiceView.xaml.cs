@@ -1,17 +1,6 @@
-﻿using Cellular.Invoices.Client.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using Cellular.Common.Invoices.Models;
+using Cellular.Invoices.Client.ViewModels;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Cellular.Invoices.Client.UWP.Views
@@ -22,10 +11,17 @@ namespace Cellular.Invoices.Client.UWP.Views
 
         public InvoiceView()
         {
-            ViewModel = new InvoiceViewModel();
-            ViewModel.GorInvoice += () => { /*Frame.Navigate();*/ };
-
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DataContext = e.Parameter as Invoice;
+        }
+
+        private void Back_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack) Frame.GoBack();
         }
     }
 }

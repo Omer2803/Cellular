@@ -22,7 +22,7 @@ namespace Cellular.Server.Controllers
             {
                 var numbers = simulator.NumbersOf(clientId);
                 if (numbers == null || numbers.Length == 0)
-                    return BadRequest();
+                    return BadRequest("The given client does not have lines. ");
                 return Ok(numbers);
             }
             catch (Exception e)
@@ -38,12 +38,12 @@ namespace Cellular.Server.Controllers
             try
             {
                 simulator.SimulateCalls(calls);
+                return Ok();
             }
             catch (Exception e)
             {
                 return BadRequest();
             }
-            return Ok();
         }
 
         [HttpPost]
@@ -53,12 +53,12 @@ namespace Cellular.Server.Controllers
             try
             {
                 simulator.SimulateSMSes(smses);
+                return Ok();
             }
             catch (Exception e)
             {
                 return BadRequest();
             }
-            return Ok();
         }
     }
 }

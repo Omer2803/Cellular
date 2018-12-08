@@ -1,4 +1,5 @@
 ﻿using Cellular.Common.Invoices;
+using Cellular.Common.Invoices.Models;
 using Cellular.MainDal;
 using System;
 using System.Linq;

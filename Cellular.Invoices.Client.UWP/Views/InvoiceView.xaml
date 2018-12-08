@@ -5,22 +5,81 @@
     xmlns:local="using:Cellular.Invoices.Client.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Cellular.Invoices.Client.UWP.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:DateTimeToShortStringConverter x:Key="ShortDate"/>
+    </Page.Resources>
+
     <Grid>
+        <Button Click="Back_Click" Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-            <StackPanel Visibility="{x:Bind ViewModel.IsEmployee}">
-                <TextBlock Text="Client ID:"/>
-                <TextBox Text="{x:Bind ViewModel.ClientId, Mode=TwoWay}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Start date:"  Margin="0,0,2,0" />
+                <TextBlock Text="{Binding StartDate, Converter={StaticResource ShortDate}}" Margin="0,0,15,0"/>
+                <TextBlock Text="  End date:" Margin="0,0,2,0"/>
+                <TextBlock Text="{Binding EndDate, Converter={StaticResource ShortDate}}" Margin="0,0,15,0"/>
+                <TextBlock Text="Total:" Margin="0,0,2,0"/>
+                <TextBlock Text="{Binding TotalPrice}"/>
             </StackPanel>
-            
-            <ComboBox Header="Numbers:" ItemsSource="{x:Bind ViewModel.Numbers}"/>
 
-            <DatePicker Date="{x:Bind ViewModel.From, Mode=TwoWay}" Header="Start Date:"/>
-            <DatePicker Date="{x:Bind ViewModel.Until, Mode=TwoWay}" Header="End Date:"/>
-
-            <Button Content="Calculate" HorizontalAlignment="Center" Click="{x:Bind ViewModel.GetInvoice}"/>
+            <ListView ItemsSource="{Binding LineInvoices}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Spacing="15" Margin="0,0,0,25">
+                            <StackPanel Spacing="10">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="For line:" Margin="0,0,2,0" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding UsageDetails.LineNumber}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="Package info" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Minuets:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding UsageDetails.Package.MaxMinuets}" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Minuets left in package:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding PackageInfo.MinuetsLeft}" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Usage percentage:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding PackageInfo.MinuetsUsagePercentage}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="SMSes:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding UsageDetails.Package.MaxSMSes}" Margin="0,0,15,0"/>
+                                    <TextBlock Text="SMSes left in package:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding PackageInfo.SMSesLeft}" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Usage percentage:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding PackageInfo.SMSesUsagePercentage}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Package price:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding UsageDetails.Package.TotalPrice}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Out of package" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Minuets out if package:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding OutOfPackage.AdditionalMinuets}" Margin="0,0,15,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="SMSes out if package:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding OutOfPackage.AdditionalSMSes}" Margin="0,0,15,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Total:" Margin="0,0,2,0"/>
+                                    <TextBlock Text="{Binding OutOfPackage.TotalAdditionalPrice}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Total:" Margin="0,0,2,0"/>
+                                <TextBlock Text="{Binding TotalPrice}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </Grid>
 </Page>

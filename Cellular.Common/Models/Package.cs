@@ -9,11 +9,11 @@
 
         public double TotalPrice { get; set; }
 
-        public bool InculdesMiutes { get; set; }
-        public int? MaxMinutes { get; set; }
+        public bool IncludesMinuets { get; set; }
+        public int? MaxMinuets { get; set; }
 
-        public bool IncludesSMS { get; set; }
-        public int? MaxSMS { get; set; }
+        public bool IncludesSMSes { get; set; }
+        public int? MaxSMSes { get; set; }
 
         public bool IncludesFriends { get; set; }
         public string Number1 { get; set; }

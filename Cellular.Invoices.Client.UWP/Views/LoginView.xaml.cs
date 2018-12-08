@@ -12,7 +12,7 @@ namespace Cellular.Invoices.Client.UWP.Views
         public LoginView()
         {
             ViewModel = new LoginViewModel();
-            ViewModel.Logedin += clientOrEmployee => Frame.Navigate(typeof(InvoiceView), clientOrEmployee);
+            ViewModel.Logedin += clientOrEmployee => Frame.Navigate(typeof(InvoiceFormView), clientOrEmployee);
             ViewModel.LoginFailed += () =>
             {
                 messagetbl.Text = "ID or password is incorrect";

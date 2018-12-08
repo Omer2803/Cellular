@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace Cellular.MainDal
 {
-    class CellularDbContextInitializer : DropCreateDatabaseAlways<CellularDbContext>
+    class CellularDbContextInitializer : DropCreateDatabaseIfModelChanges<CellularDbContext>
     {
         protected override void Seed(CellularDbContext context)
         {

@@ -1,7 +1,6 @@
 ﻿using Cellular.Common.Invoices;
 using Cellular.Common.Invoices.Models;
 using Cellular.MainDal;
-using System.Linq;
 
 namespace Cellular.Invoices.DAL.Invoices
 {
@@ -14,7 +13,7 @@ namespace Cellular.Invoices.DAL.Invoices
                 LoginResultEnum resultType = 0;
                 object result = null;
 
-                var client = context.Clients.FirstOrDefault(c => c.Id == id);
+                var client = context.Clients.Find(id);
 
                 if (client != null)
                 {
@@ -27,7 +26,7 @@ namespace Cellular.Invoices.DAL.Invoices
                 }
                 else
                 {
-                    var employee = context.Employees.FirstOrDefault(e => e.Id == id);
+                    var employee = context.Employees.Find(id);
                     if (employee != null)
                     {
                         if (employee.Password == password)

@@ -43,7 +43,7 @@ namespace Cellular.Server.Controllers
             try
             {
                 var result = invoicesProducer.CreateInvoice(model.ClientId, model.From, model.Until);
-                return Ok(result);
+                return Json(result);
             }
             catch (Exception e)
             {

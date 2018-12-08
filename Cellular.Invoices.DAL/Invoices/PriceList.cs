@@ -9,27 +9,34 @@ namespace Cellular.Invoices.DAL.Invoices
     {
         public double GetCallMinuetPrice(ClientTypeEnum clientType)
         {
-
-            if (prices[(clientType, ServiceType.Call)] == null)
+            if (!prices.ContainsKey((clientType, ServiceType.Call)))
             {
                 using (var context = new CellularDbContext())
-                    return context.ClientTypes.Find(clientType).CallMinutesPrice;
+                {
+                    var price = context.ClientTypes.Find(clientType).CallMinutesPrice;
+                    prices[(clientType, ServiceType.Call)] = price;
+                    return price;
+                }
             }
-            return prices[(clientType, ServiceType.Call)].Value;
+            return prices[(clientType, ServiceType.Call)];
         }
 
         public double GetSMSPrice(ClientTypeEnum clientType)
         {
-            if (prices[(clientType, ServiceType.SMS)] == null)
+            if (!prices.ContainsKey((clientType, ServiceType.SMS)))
             {
                 using (var context = new CellularDbContext())
-                    return context.ClientTypes.Find(clientType).SmsPrice;
+                {
+                    var price = context.ClientTypes.Find(clientType).SmsPrice;
+                    prices[(clientType, ServiceType.SMS)] = price;
+                    return price;
+                }
             }
-            return prices[(clientType, ServiceType.Call)].Value;
+            return prices[(clientType, ServiceType.Call)];
         }
 
-        private static readonly Dictionary<(ClientTypeEnum, ServiceType), double?> prices
-            = new Dictionary<(ClientTypeEnum, ServiceType), double?>();
+        private static readonly Dictionary<(ClientTypeEnum, ServiceType), double> prices
+            = new Dictionary<(ClientTypeEnum, ServiceType), double>();
 
         private enum ServiceType
         {

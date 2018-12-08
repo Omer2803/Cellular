@@ -1,6 +1,5 @@
 ﻿using Cellular.Common.Invoices;
 using Cellular.Common.Invoices.Models;
-using Cellular.Common.Models;
 using System;
 using System.Linq;
 
@@ -19,72 +18,75 @@ namespace Cellular.Invoices.BL.Invoices
 
         public Invoice CreateInvoice(int clientId, DateTime from, DateTime until)
         {
-            var data = repository.GetClientUsageDetails(clientId, from, until);
+            var usageDetails = repository.GetClientUsageDetails(clientId, from, until);
 
-            var invoices = new SingeLineInvoice[data.Length];
+            var invoices = new SingeLineInvoice[usageDetails.Length];
 
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < usageDetails.Length; i++)
             {
-                var pack = data[i].Package;
+                var pack = usageDetails[i].Package;
+                bool hasMinuets = pack != null ? pack.IncludesMinuets : false;
+                bool hasSMSes = pack != null ? pack.IncludesSMSes : false;
 
-                var minuetsDiff = MinuetsDifferece(data[i]);
+                double mins = MinuetsWithoutFriends(usageDetails[i], out double? friendsMinuets);
+                int smses = usageDetails[i].SMSes.Length;
 
-                int smsesDiff = pack.IncludesSMS ? data[i].SMSes.Length - pack.MaxSMS.Value : 0;
-
-                var minuetsLeft = minuetsDiff > 0 ? 0 : -minuetsDiff;
+                double minuetsDiff = pack != null ? pack.IncludesMinuets ? mins - pack.MaxMinuets.Value : mins : mins;
+                int smsesDiff = pack != null ? pack.IncludesSMSes ? smses - pack.MaxSMSes.Value : smses : smses;
 
                 var packInfo = new PackageInfo
                 {
-                    MinuetsLeft = minuetsLeft,
-                    MinuetsUsagePercentage =,
-                    MinutesToFriends =,
-                    SMSesLeft =,
-                    SMSesUsagePercentage =,
+                    MinuetsLeft = hasMinuets ? minuetsDiff > 0 ? (double?)null : -minuetsDiff : null,
+                    MinuetsUsagePercentage = hasMinuets ? minuetsDiff > 0 ? 100 : mins / pack.MaxMinuets * 100 : null,
+                    FriendsMinuets = friendsMinuets,
+                    SMSesLeft = hasSMSes ? smsesDiff > 0 ? (int?)null : -smsesDiff : null,
+                    SMSesUsagePercentage = hasSMSes ? smsesDiff > 0 ? 100 : smses / pack.MaxSMSes * 100 : null,
                 };
 
-                var additionalMinuets = minuetsDiff > 0 ? minuetsDiff : 0;
-                var additionalSMSes = smsesDiff > 0 ? smsesDiff : 0;
-
-                var outOfPack = new OutOfPackage
-                {
-                    AdditionalMinuets = additionalMinuets,
-                    AdditionalSMSes = additionalSMSes
-                };
+                var outOfPack = new OutOfPackage();
+                outOfPack.AdditionalMinuets = minuetsDiff > 0 ? minuetsDiff : 0;
+                outOfPack.AdditionalSMSes = smsesDiff > 0 ? smsesDiff : 0;
                 outOfPack.TotalAdditionalPrice =
-                    outOfPack.AdditionalMinuets * priceList.GetCallMinuetPrice(data[i].ClientType) +
-                    outOfPack.AdditionalSMSes * priceList.GetSMSPrice(data[i].ClientType);
+                    outOfPack.AdditionalMinuets * priceList.GetCallMinuetPrice(usageDetails[i].ClientType) +
+                    outOfPack.AdditionalSMSes * priceList.GetSMSPrice(usageDetails[i].ClientType);
 
                 invoices[i] = new SingeLineInvoice
                 {
-                    UsageDetails = data[i],
+                    UsageDetails = usageDetails[i],
                     PackageInfo = packInfo,
                     OutOfPackage = outOfPack,
-                    TotalPrice = pack.TotalPrice + outOfPack.TotalAdditionalPrice
+                    TotalPrice = (pack?.TotalPrice ?? 0) + outOfPack.TotalAdditionalPrice
                 };
             }
 
             return new Invoice
             {
+                StartDate = from,
+                EndDate = until,
                 LineInvoices = invoices,
                 TotalPrice = invoices.Sum(i => i.TotalPrice),
                 AdditionalPrice = invoices.Sum(i => i.OutOfPackage.TotalAdditionalPrice)
             };
         }
 
-        private double MinuetsDifferece(SingleLineUsageDetails usageDetails)
+        private double MinuetsWithoutFriends(SingleLineUsageDetails usageDetails, out double? friendsMinuets)
         {
             var pack = usageDetails.Package;
 
-            var friends = pack.IncludesFriends ?
-                    new string[] { pack.Number1, pack.Number2, pack.Number3 }
+            var friends = pack != null ?
+                pack.IncludesFriends ?
+                    new string[] { pack.Number1, pack.Number2, pack.Number3 } : new string[0]
                     : new string[0];
 
-            return pack.InculdesMiutes ?
-                usageDetails.Calls
-                .Where(c => !friends.Contains(c.DestinationNumber))
-                .Sum(c => c.Duration.TotalMinutes)
-                - pack.MaxMinutes.Value
-                : 0;
+            var friendsCalls = usageDetails.Calls
+                .Where(c => friends.Contains(c.DestinationNumber))
+                .ToArray();
+
+            friendsMinuets = friendsCalls.Sum(c => c.Duration.TotalMinutes);
+
+            return usageDetails.Calls
+                .Except(friendsCalls)
+                .Sum(c => c.Duration.TotalMinutes);
         }
     }
 }

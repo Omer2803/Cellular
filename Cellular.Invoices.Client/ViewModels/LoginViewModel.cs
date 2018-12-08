@@ -22,8 +22,9 @@ namespace Cellular.Invoices.Client.ViewModels
                 canTryLogin = false;
                 TringLogin?.Invoke();
                 var result = await httpClient.TryLogin(Id, Password);
-                if (result.ResultType == LoginResultEnum.Client
-                   || result.ResultType == LoginResultEnum.Employee)
+                if (result != null 
+                    && (result.ResultType == LoginResultEnum.Client
+                    || result.ResultType == LoginResultEnum.Employee))
                     Logedin?.Invoke(result.Result);
                 else
                 {

@@ -1,15 +1,13 @@
 ﻿using Cellular.Common.Invoices.Models;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cellular.Invoices.Client.HttpClients
 {
-    class InvoiceHttpClient
+    class InvoiceFormHttpClient
     {
-        private const string baseAdress= "";
+        private const string baseAdress= "http://localhost:50602/";
         private readonly Uri uri = new Uri(baseAdress);
 
         public async Task<string[]> NumbersOf(int clientId)

@@ -13,7 +13,6 @@ namespace DALTests
         {
             using (var context = new CellularDbContext())
             {
-                //context.Database.Delete();
                 context.Database.Create();
             }
         }
@@ -24,6 +23,15 @@ namespace DALTests
             using (var context = new CellularDbContext())
             {
                 context.Database.Initialize(true);
+            }
+        }
+
+        [TestMethod]
+        public void DeleteDB()
+        {
+            using (var context = new CellularDbContext())
+            {
+                context.Database.Delete();
             }
         }
 
@@ -106,6 +114,24 @@ namespace DALTests
                 context.Employees.Add(OdedEmp);
                 context.Clients.Add(ilanCli);
 
+                context.SaveChanges();
+            }
+
+        }
+
+        [TestMethod]
+        public void AddingPackage()
+        {
+            using (var context = new CellularDbContext())
+            {
+                context.Packages.Add(new Package
+                {
+                    IncludesMinuets = true,
+                    MaxMinuets = 200,
+                    IncludesSMSes = true,
+                    MaxSMSes = 10,
+                    LineNumber = "056352417"
+                });
                 context.SaveChanges();
             }
         }

@@ -10,6 +10,6 @@
 
         public double? SMSesUsagePercentage { get; set; }
 
-        public double? MinutesToFriends { get; set; }
+        public double? FriendsMinuets { get; set; }
     }
 }
