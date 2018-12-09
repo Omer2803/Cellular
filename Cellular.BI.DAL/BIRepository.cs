@@ -1,4 +1,5 @@
 ﻿using Cellular.Common.BI;
+using Cellular.Common.BI.Models;
 using Cellular.Common.Models;
 using Cellular.MainDal;
 using System;
@@ -13,41 +14,41 @@ namespace Cellular.BI.DAL
     {
         private const string NUMBEROFCENTER = "09";
 
-        public Dictionary<int,int> BestSellers()
+        public BestSeller[] BestSellers()
         {
             using (var db = new CellularDbContext())
             {
-                var dicBestSeller = db.Employees
+                return db.Employees
                     .Join(db.Clients, e => e.Id, c => c.RegisteredBy, (e, c) => new
                     {
                         EmplyeeId = e.Id,
                         c.RegisteredBy
                     })
                     .GroupBy(c => c.RegisteredBy)
-                .Select(group => new
+                .Select(group => new BestSeller
                 {
-                    Id = group.Key,
-                    Count = group.Count()
+                    EmployeeId = group.Key,
+                    ClientsCount = group.Count()
                 })
-                .OrderByDescending(e => e.Count)
-                .Take(10).ToDictionary(x => x.Id, y => y.Count);
-                return dicBestSeller;
+                .OrderByDescending(e => e.ClientsCount)
+                .Take(10)
+                .ToArray();
             }
         }
 
-        public Dictionary<string,int> MostCallingToServiceCenter()
+        public MostCallingToCenter[] MostCallingToServiceCenter()
         {
             using (var db = new CellularDbContext())
             {
                 var dicCallToService = db.Calls.
                     Where(c => c.DestinationNumber == NUMBEROFCENTER)
                     .GroupBy(c => c.CallerNumber)
-                    .Select(group => new
+                    .Select(group => new MostCallingToCenter
                     {
                         CallerNumber = group.Key,
-                        Count = group.Count()
-                    }).OrderByDescending(c => c.Count)
-                    .Take(10).ToDictionary(x=>x.CallerNumber,y=>y.Count);
+                        CallToCenterCount = group.Count()
+                    }).OrderByDescending(c => c.CallToCenterCount)
+                    .Take(10).ToArray();
                 return dicCallToService;
             }
         }
@@ -57,28 +58,28 @@ namespace Cellular.BI.DAL
             using (var db = new CellularDbContext())
             {
                 var countofLines = db.Lines.Count(l => l.ClientId == clientId);
-                var countOfCallToCenter = db.Lines.Where(l => l.ClientId == clientId)
+                var countOfCallToCenter = db.Lines.Where(l => l.ClientId == clientId).ToArray()
                     .Sum(l => db.Calls.
                     Count(c => c.DestinationNumber == NUMBEROFCENTER &&
                     c.CallerNumber == l.PhoneNumber));
-               return (countofLines * 0.2) + (countOfCallToCenter * -0.1); // +invoices/1000
+                return (countofLines * 0.2) + (countOfCallToCenter * -0.1);
             }
         }
 
-        public Dictionary<Client, double> MostProfitableClients()
+        public List<MostValue> MostProfitableClients()
         {
             using (var db = new CellularDbContext())
             {
-                Dictionary<Client, double> dic = new Dictionary<Client, double>();
-                foreach (var c in db.Clients)
-                {
-                    dic.Add(c, CalculateProfitableClient(c.Id));
-                }
-                var dicClient = dic.OrderByDescending(x => x.Value).Take(10)
-                                      .ToDictionary(x => x.Key, x => x.Value);
-                return dicClient;
-
-               
+                return db.Clients
+                    .ToArray()
+                    .Select(c => new MostValue
+                    {
+                        Client = c,
+                        ValueGrade = CalculateProfitableClient(c.Id)
+                    })
+                    .OrderByDescending(c => c.ValueGrade)
+                    .Take(10)
+                    .ToList();
             }
         }
 
@@ -100,7 +101,7 @@ namespace Cellular.BI.DAL
                 }).OrderByDescending(x => x.Count).Take(3).ToArray();
 
                 return null;
-                
+
             }
         }
     }

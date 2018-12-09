@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Cellular.Common.BI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -11,7 +12,7 @@ namespace Cellular.BI.Client
     {
         private const string urlServerBase = "http://localhost:50602/";
 
-        public models.Client[] MostProfitableClients()
+        public List<MostValue> MostProfitableClients()
         {
             using (var httpClient =new HttpClient())
             {
@@ -21,13 +22,13 @@ namespace Cellular.BI.Client
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<models.Client[]>(jsonResult);
+                    return JsonConvert.DeserializeObject<List<MostValue>>(jsonResult);
                 }
                 return null;
             }
         }
 
-        public models.Client[] MostCallingToServiceCenter()
+        public MostCallingToCenter[] MostCallingToServiceCenter()
         {
             using (var httpClient = new HttpClient())
             {
@@ -37,7 +38,7 @@ namespace Cellular.BI.Client
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<models.Client[]>(jsonResult);
+                    return JsonConvert.DeserializeObject<MostCallingToCenter[]>(jsonResult);
                 }
                 return null;
             }
@@ -59,7 +60,7 @@ namespace Cellular.BI.Client
             }
         }
 
-        public models.Employee[] BestSellers()
+        public BestSeller[] BestSellers()
         {
             using (var httpClient = new HttpClient())
             {
@@ -69,7 +70,7 @@ namespace Cellular.BI.Client
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<models.Employee[]>(jsonResult);
+                    return JsonConvert.DeserializeObject<BestSeller[]>(jsonResult);
                 }
                 return null;
             }

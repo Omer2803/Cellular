@@ -1,4 +1,5 @@
 ﻿using Cellular.Common.BI;
+using Cellular.Common.BI.Models;
 using Cellular.Common.Models;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,23 @@ namespace Cellular.BI.BL
         {
             this._bIRepository = bIRepository;
         }
-
-        public Dictionary<int, int> BestSellers()
+        /// <summary>
+        /// jjjjjjj
+        /// </summary>
+        /// <returns>
+        /// jhgh
+        /// </returns>
+        public BestSeller[] BestSellers()
         {
             return _bIRepository.BestSellers();
         }
 
-        public Dictionary<string, int> MostCallingToServiceCenter()
+        public MostCallingToCenter[] MostCallingToServiceCenter()
         {
             return _bIRepository.MostCallingToServiceCenter();
         }
 
-        public Dictionary<Client, double> MostProfitableClients()
+        public List<MostValue> MostProfitableClients()
         {
             return _bIRepository.MostProfitableClients();
         }

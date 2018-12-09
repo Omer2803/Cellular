@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cellular.Common.BI.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,27 +15,20 @@ namespace Cellular.BI.Client.UWP.ViewModels
 
         private BiBLClient _biBlClient = new BiBLClient();
 
-        public models.Client[] MostProfitableClients
+        public List<MostValue> MostProfitableClients
         {
             get
             {
-                return MostProfitableClients = _biBlClient.MostProfitableClients();
+                return _biBlClient.MostProfitableClients();
             }
-            set
-            {
-
-            }
+           
         }
 
-        public models.Client[] MostCallingToServiceCenter
+        public MostCallingToCenter[] MostCallingToServiceCenter
         {
             get
             {
-                return MostCallingToServiceCenter = _biBlClient.MostCallingToServiceCenter();
-            }
-            set
-            {
-
+                return _biBlClient.MostCallingToServiceCenter();
             }
         }
 
@@ -42,7 +36,7 @@ namespace Cellular.BI.Client.UWP.ViewModels
         {
             get
             {
-                return PotentialFriendsGroups = _biBlClient.PotentialFriendsGroups();
+                return _biBlClient.PotentialFriendsGroups();
             }
             set
             {
@@ -50,15 +44,11 @@ namespace Cellular.BI.Client.UWP.ViewModels
             }
         }
 
-        public models.Employee[] BestSellers
+        public BestSeller[] BestSellers
         {
             get
             {
-                return BestSellers = _biBlClient.BestSellers();
-            }
-            set
-            {
-
+                return _biBlClient.BestSellers();
             }
         }
 

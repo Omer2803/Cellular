@@ -15,30 +15,39 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <TextBlock Text="Most value"/>
-            <ListView ItemsSource="">
+            <ListView ItemsSource="{x:Bind BiViewModel.MostProfitableClients}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-
+                        <StackPanel>
+                            <TextBlock Text="{Binding Client.Id}"/>
+                            <TextBlock Text="{Binding ValueGrade}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBlock Text="Most calling to center"/>
-            <ListView ItemsSource="{x:Bind BiViewModel.PotentialFriendsGroups}">
+            <ListView ItemsSource="{x:Bind BiViewModel.MostCallingToServiceCenter}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-
+                        <StackPanel>
+                            <TextBlock Text="{Binding CallerNumber}"/>
+                            <TextBlock Text="{Binding CallToCenterCount}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
         <StackPanel Grid.Column="2">
             <TextBlock Text="Best seller"/>
-            <ListView >
+            <ListView ItemsSource="{x:Bind BiViewModel.BestSellers}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-
+                        <StackPanel>
+                            <TextBlock Text="{Binding EmployeeId}"/>
+                            <TextBlock Text="{Binding ClientsCount}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
