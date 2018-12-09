@@ -14,7 +14,7 @@
             <ComboBox Width="150" Name="typeCombo"></ComboBox>
             <TextBox Width="150" PlaceholderText="FirstName" Text="{x:Bind AddClientViewModel.FirstName,Mode=TwoWay}"/>
             <TextBox Width="150" PlaceholderText="LastName" Text="{x:Bind AddClientViewModel.LastName,Mode=TwoWay}"/>
-            <TextBox Width="150" PlaceholderText="Password" Text="{x:Bind AddClientViewModel.Password,Mode=TwoWay}"/>
+            <PasswordBox Width="150" PlaceholderText="Password" Password="{x:Bind AddClientViewModel.Password,Mode=TwoWay}"/>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Add Client" CommandParameter="{Binding ElementName=typeCombo,Path=SelectedItem}" Click="{x:Bind AddClientViewModel.AddNewClient}">
                 </Button>

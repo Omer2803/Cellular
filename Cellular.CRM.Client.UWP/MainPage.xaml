@@ -6,23 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Width="300" Height="300">
 
-
-   
-    <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="ID"/>
-            <TextBox Width="100" Text="{x:Bind LoginViewModel.Id,Mode=TwoWay}" />
+    <StackPanel>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
+            <TextBlock Text="CRM" Foreground="AliceBlue"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Password"/>
-            <TextBox Width="100" Text="{x:Bind LoginViewModel.Password, Mode=TwoWay}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Login"  Click="{x:Bind LoginViewModel.Login}">
-            </Button>
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <TextBox PlaceholderText="ID" Width="100" Text="{x:Bind LoginViewModel.Id,Mode=TwoWay}" />
+            <PasswordBox PlaceholderText="Password" Width="100" Password="{x:Bind LoginViewModel.Password, Mode=TwoWay}"/>
+            <Button Content="Login"  Click="{x:Bind LoginViewModel.Login}"/>
         </StackPanel>
     </StackPanel>
-   
 </Page>
