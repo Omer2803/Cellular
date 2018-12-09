@@ -190,15 +190,15 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             if (package != null)
             {
                 PackageId = package.Id;
-                IncludesMiutes = package.InculdesMiutes;
+                IncludesMiutes = package.IncludesMinuets;
                 if (IncludesMiutes)
                 {
-                    MaxMinutes = (int)package.MaxMinutes;
+                    MaxMinutes = (int)package.MaxMinuets;
                 }
-                IncludesSms = package.IncludesSMS;
+                IncludesSms = package.IncludesSMSes;
                 if (IncludesSms)
                 {
-                    MaxSms = (int)package.MaxSMS;
+                    MaxSms = (int)package.MaxSMSes;
                 }
                 IncludesFriends = package.IncludesFriends;
                 if (IncludesFriends)
@@ -244,15 +244,15 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         {
             Package newPackage = new Package();
             newPackage.Id = PackageId;
-            newPackage.InculdesMiutes = IncludesMiutes;
+            newPackage.IncludesMinuets = IncludesMiutes;
             if (IncludesMiutes)
             {
-                newPackage.MaxMinutes = MaxMinutes;
+                newPackage.MaxMinuets = MaxMinutes;
             }
-            newPackage.IncludesSMS = IncludesSms;
+            newPackage.IncludesSMSes = IncludesSms;
             if (IncludesSms)
             {
-                newPackage.MaxSMS = MaxSms;
+                newPackage.MaxSMSes = MaxSms;
             }
             newPackage.IncludesFriends = IncludesFriends;
             if (IncludesFriends)

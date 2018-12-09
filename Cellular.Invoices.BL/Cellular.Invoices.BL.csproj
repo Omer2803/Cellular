@@ -45,9 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Invoices\Authenticator.cs" />
-    <Compile Include="Invoices\Invoice.cs" />
     <Compile Include="Invoices\InvoicesProducer.cs" />
-    <Compile Include="Invoices\OutOfPackage.cs" />
     <Compile Include="IoCManager.cs" />
     <Compile Include="OptimalPackage\OptimalPackageCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

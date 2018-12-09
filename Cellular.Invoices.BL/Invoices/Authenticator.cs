@@ -1,9 +1,5 @@
 ﻿using Cellular.Common.Invoices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Cellular.Common.Invoices.Models;
 
 namespace Cellular.Invoices.BL.Invoices
 {
@@ -16,7 +12,7 @@ namespace Cellular.Invoices.BL.Invoices
             this.dALAuthenticator = dALAuthenticator;
         }
 
-        public object Login(int id, string password)
+        public LoginResult Login(int id, string password)
         {
             return dALAuthenticator.GetClientOrEmployee(id, password);
         }

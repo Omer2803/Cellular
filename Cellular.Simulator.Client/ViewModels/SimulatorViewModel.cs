@@ -34,7 +34,9 @@ namespace Cellular.Simulator.Client.ViewModels
         private async void SetClientId(int value)
         {
             clientId = value;
-            Numbers = await httpClient.NumbersOf(value);
+            var result = await httpClient.NumbersOf(value);
+            if (result != null) Numbers = result;
+            else ServiceNotAvilable?.Invoke();
         }
 
         private string[] numbers;
@@ -131,27 +133,34 @@ namespace Cellular.Simulator.Client.ViewModels
         public async Task Simulate()
         {
             if (!CanSimulate) return;
-            switch (isCall)
+            try
             {
-                case true:
-                    await httpClient.SimulateCalls(new SimulatorCalls
-                    {
-                        CallerNumber = SelectedNumber,
-                        DestinationOption = sendTo,
-                        MinDuration = TimeSpan.FromMinutes(MinDuration),
-                        MaxDuration = TimeSpan.FromMinutes(MaxDuration),
-                        Simulations = Simulations
-                    });
-                    return;
-                case false:
-                    await httpClient.SimulateSMSes(new SimulatorSMSes
-                    {
-                        SenderNumber = SelectedNumber,
-                        DestinationOption = sendTo,
-                        Simulations = Simulations
-                    });
-                    return;
-                default: throw new Exception();
+                switch (isCall)
+                {
+                    case true:
+                        await httpClient.SimulateCalls(new SimulatorCalls
+                        {
+                            CallerNumber = SelectedNumber,
+                            DestinationOption = sendTo,
+                            MinDuration = TimeSpan.FromMinutes(MinDuration),
+                            MaxDuration = TimeSpan.FromMinutes(MaxDuration),
+                            Simulations = Simulations
+                        });
+                        return;
+                    case false:
+                        await httpClient.SimulateSMSes(new SimulatorSMSes
+                        {
+                            SenderNumber = SelectedNumber,
+                            DestinationOption = sendTo,
+                            Simulations = Simulations
+                        });
+                        return;
+                    default: throw new Exception();
+                }
+            }
+            catch (Exception e)
+            {
+                ServiceNotAvilable?.Invoke();
             }
         }
 
@@ -170,8 +179,10 @@ namespace Cellular.Simulator.Client.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         private void Notify([CallerMemberName] string propertyName = null)
         {
-            if(propertyName != nameof(CanSimulate))Notify(nameof(CanSimulate));
+            if (propertyName != nameof(CanSimulate)) Notify(nameof(CanSimulate));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public event Action ServiceNotAvilable;
     }
 }

@@ -13,7 +13,6 @@ namespace DALTests
         {
             using (var context = new CellularDbContext())
             {
-                //context.Database.Delete();
                 context.Database.Create();
             }
         }
@@ -24,6 +23,15 @@ namespace DALTests
             using (var context = new CellularDbContext())
             {
                 context.Database.Initialize(true);
+            }
+        }
+
+        [TestMethod]
+        public void DeleteDB()
+        {
+            using (var context = new CellularDbContext())
+            {
+                context.Database.Delete();
             }
         }
 
@@ -74,6 +82,56 @@ namespace DALTests
 
                 //context.Clients
 
+                context.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void AddingClientWithEmployyeId()
+        {
+            using (var context = new CellularDbContext())
+            {
+                var OdedEmp = new Employee
+                {
+                    FirstName = "Oded",
+                    LastName = "Bartov",
+                    Id = 8888,
+                    Password = "22",
+                    Rank = EmployeeRank.CustomerRepresentative
+                };
+
+                var ilanCli = new Client
+                {
+                    RegisteredBy = OdedEmp.Id,
+                    Id = 4646,
+                    FirstName = "Ilan",
+                    LastName = "Rozenfeld",
+                    ClientTypeId = ClientTypeEnum.VIP,
+                    Password = "aaa",
+                    RegisterationDate = DateTime.Now.AddDays(-600)
+                };
+
+                context.Employees.Add(OdedEmp);
+                context.Clients.Add(ilanCli);
+
+                context.SaveChanges();
+            }
+
+        }
+
+        [TestMethod]
+        public void AddingPackage()
+        {
+            using (var context = new CellularDbContext())
+            {
+                context.Packages.Add(new Package
+                {
+                    IncludesMinuets = true,
+                    MaxMinuets = 200,
+                    IncludesSMSes = true,
+                    MaxSMSes = 10,
+                    LineNumber = "056352417"
+                });
                 context.SaveChanges();
             }
         }
