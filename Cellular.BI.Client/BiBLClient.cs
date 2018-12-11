@@ -10,15 +10,15 @@ namespace Cellular.BI.Client
 {
     public class BiBLClient
     {
-        private const string urlServerBase = "http://localhost:50602/";
+        private const string URLSERVERBASE = "http://localhost:50602/";
 
-        public List<MostValue> MostProfitableClients()
+        public List<MostValue> MostProfitableClients(int count)
         {
             using (var httpClient =new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(urlServerBase);
+                httpClient.BaseAddress = new Uri(URLSERVERBASE);
                 httpClient.DefaultRequestHeaders.Clear();
-                var response = httpClient.GetAsync("api/BI/GetMostProfitableClients").Result;
+                var response = httpClient.GetAsync("api/BI/GetMostProfitableClients?count=" + count).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;
@@ -28,13 +28,13 @@ namespace Cellular.BI.Client
             }
         }
 
-        public MostCallingToCenter[] MostCallingToServiceCenter()
+        public MostCallingToCenter[] MostCallingToServiceCenter(int count)
         {
             using (var httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(urlServerBase);
+                httpClient.BaseAddress = new Uri(URLSERVERBASE);
                 httpClient.DefaultRequestHeaders.Clear();
-                var response = httpClient.GetAsync("api/BI/GetMostCallingToServiceCenter").Result;
+                var response = httpClient.GetAsync("api/BI/GetMostCallingToServiceCenter?count=" + count).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;
@@ -43,30 +43,14 @@ namespace Cellular.BI.Client
                 return null;
             }
         }
-
-        public models.Client[] PotentialFriendsGroups()
+        
+        public BestSeller[] BestSellers(int count)
         {
             using (var httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri(urlServerBase);
+                httpClient.BaseAddress = new Uri(URLSERVERBASE);
                 httpClient.DefaultRequestHeaders.Clear();
-                var response = httpClient.GetAsync("api/BI/GetPotentialFriendsGroups").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<models.Client[]>(jsonResult);
-                }
-                return null;
-            }
-        }
-
-        public BestSeller[] BestSellers()
-        {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.BaseAddress = new Uri(urlServerBase);
-                httpClient.DefaultRequestHeaders.Clear();
-                var response = httpClient.GetAsync("api/BI/GetBestSellers").Result;
+                var response = httpClient.GetAsync("api/BI/GetBestSellers?count=" + count).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResult = response.Content.ReadAsStringAsync().Result;

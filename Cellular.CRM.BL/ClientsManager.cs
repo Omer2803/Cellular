@@ -21,22 +21,17 @@ namespace Cellular.CRM.BL
         {
             _clientsRepository.AddClient(client);
         }
-
-        public void DeleteClient(int clientId)
-        {
-            _clientsRepository.DeleteClient(clientId);
-        }
-
+        
         public Client EditClient(Client client)
         {
              return _clientsRepository.EditClient(client);
         }
-
+        
         public List<Client> GetAllClients()
         {
             return _clientsRepository.GetAllClients();
         }
-
+        
         public Client GetClientById(int id)
         {
             return _clientsRepository.GetClientById(id);

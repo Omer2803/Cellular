@@ -18,5 +18,6 @@
             <PasswordBox PlaceholderText="Password" Width="100" Password="{x:Bind LoginViewModel.Password, Mode=TwoWay}"/>
             <Button Content="Login"  Click="{x:Bind LoginViewModel.Login}"/>
         </StackPanel>
+        <TextBlock Foreground="Red" Text="{x:Bind LoginViewModel.Error,Mode=TwoWay}"/>
     </StackPanel>
 </Page>

@@ -16,6 +16,7 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         private readonly Page page;
         private CrmBlClient _crmBlClient;
 
+        #region Client details
 
         public int EmployeeId { get; set; }
 
@@ -79,6 +80,8 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+        #endregion
 
         public AddClientViewModel(Page page)
         {

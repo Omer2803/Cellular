@@ -21,19 +21,20 @@ namespace Cellular.CRM.Client.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddLineView : Page
+    public sealed partial class LineView : Page
     {
-        public AddLineViewModel AddLineViewModel;
-        public AddLineView()
+        public LineViewModel LineViewModel;
+        public LineView()
         {
             this.InitializeComponent();
-            AddLineViewModel = new AddLineViewModel(this);
+            LineViewModel = new LineViewModel(this);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            AddLineViewModel.ClientId = (int)e.Parameter;
+            LineViewModel.ClientId = ((Tuple<int, bool,bool>)e.Parameter).Item1;
+            LineViewModel.IsEditLine = ((Tuple<int, bool,bool>)e.Parameter).Item2;
+            LineViewModel.IsAddLine = ((Tuple<int, bool,bool>)e.Parameter).Item3;
         }
-        
     }
 }

@@ -17,30 +17,22 @@ namespace Cellular.BI.BL
         {
             this._bIRepository = bIRepository;
         }
-        /// <summary>
-        /// jjjjjjj
-        /// </summary>
-        /// <returns>
-        /// jhgh
-        /// </returns>
-        public BestSeller[] BestSellers()
+       
+        public BestSeller[] BestSellers(int count)
         {
-            return _bIRepository.BestSellers();
+            return _bIRepository.BestSellers(count);
         }
 
-        public MostCallingToCenter[] MostCallingToServiceCenter()
+        public MostCallingToCenter[] MostCallingToServiceCenter(int count)
         {
-            return _bIRepository.MostCallingToServiceCenter();
+            return _bIRepository.MostCallingToServiceCenter(count);
         }
 
-        public List<MostValue> MostProfitableClients()
+        public List<MostValue> MostProfitableClients(int count)
         {
-            return _bIRepository.MostProfitableClients();
+            return _bIRepository.MostProfitableClients(count);
         }
 
-        public Client[] PotentialFriendsGroups()
-        {
-            return _bIRepository.PotentialFriendsGroups();
-        }
+       
     }
 }

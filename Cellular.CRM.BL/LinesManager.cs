@@ -16,7 +16,7 @@ namespace Cellular.CRM.BL
         {
             this._linesPackagesRepository = linesPackagesRepository;
         }
-
+        
         public void AddLine(Line line)
         {
             _linesPackagesRepository.AddLine(line);
@@ -26,17 +26,17 @@ namespace Cellular.CRM.BL
         {
             _linesPackagesRepository.AddPackage(package);
         }
-
+        
         public Package EditPackage(Package package)
         {
             return _linesPackagesRepository.EditPackage(package);
         }
-
+        
         public List<Line> GetLinesByClientId(int clientId)
         {
             return _linesPackagesRepository.GetLinesOfClient(clientId);
         }
-
+        
         public Package GetPackageOfLine(string lineNumber)
         {
             return _linesPackagesRepository.GetPackageOfLine(lineNumber);

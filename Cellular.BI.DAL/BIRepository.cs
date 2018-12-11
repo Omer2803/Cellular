@@ -14,7 +14,7 @@ namespace Cellular.BI.DAL
     {
         private const string NUMBEROFCENTER = "09";
 
-        public BestSeller[] BestSellers()
+        public BestSeller[] BestSellers(int count)
         {
             using (var db = new CellularDbContext())
             {
@@ -31,12 +31,12 @@ namespace Cellular.BI.DAL
                     ClientsCount = group.Count()
                 })
                 .OrderByDescending(e => e.ClientsCount)
-                .Take(10)
+                .Take(count)
                 .ToArray();
             }
         }
 
-        public MostCallingToCenter[] MostCallingToServiceCenter()
+        public MostCallingToCenter[] MostCallingToServiceCenter(int count)
         {
             using (var db = new CellularDbContext())
             {
@@ -48,11 +48,15 @@ namespace Cellular.BI.DAL
                         CallerNumber = group.Key,
                         CallToCenterCount = group.Count()
                     }).OrderByDescending(c => c.CallToCenterCount)
-                    .Take(10).ToArray();
+                    .Take(count).ToArray();
                 return dicCallToService;
             }
         }
-
+        /// <summary>
+        /// Formula to calculte the value client.
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
         private double CalculateProfitableClient(int clientId)
         {
             using (var db = new CellularDbContext())
@@ -66,7 +70,7 @@ namespace Cellular.BI.DAL
             }
         }
 
-        public List<MostValue> MostProfitableClients()
+        public List<MostValue> MostProfitableClients(int count)
         {
             using (var db = new CellularDbContext())
             {
@@ -78,31 +82,10 @@ namespace Cellular.BI.DAL
                         ValueGrade = CalculateProfitableClient(c.Id)
                     })
                     .OrderByDescending(c => c.ValueGrade)
-                    .Take(10)
+                    .Take(count)
                     .ToList();
             }
         }
 
-        public Client[] PotentialFriendsGroups()
-        {
-            using (var db = new CellularDbContext())
-            {
-                var ab = db.Lines.Join(db.Calls, l => l.PhoneNumber, c => c.CallerNumber, (l, c) =>
-                 new
-                 {
-                     PhoneNumber = l.PhoneNumber,
-                     DestNumber = c.DestinationNumber
-                 }).
-                GroupBy(c => c.DestNumber)
-                .Select(group => new
-                {
-                    DestinationNumber = group.Key,
-                    Count = group.Count()
-                }).OrderByDescending(x => x.Count).Take(3).ToArray();
-
-                return null;
-
-            }
-        }
     }
 }

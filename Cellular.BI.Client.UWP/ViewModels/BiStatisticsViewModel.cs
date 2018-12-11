@@ -12,6 +12,7 @@ namespace Cellular.BI.Client.UWP.ViewModels
     public class BiStatisticsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private const int TOPGROUP = 10;
 
         private BiBLClient _biBlClient = new BiBLClient();
 
@@ -19,7 +20,7 @@ namespace Cellular.BI.Client.UWP.ViewModels
         {
             get
             {
-                return _biBlClient.MostProfitableClients();
+                return _biBlClient.MostProfitableClients(TOPGROUP);
             }
            
         }
@@ -28,19 +29,7 @@ namespace Cellular.BI.Client.UWP.ViewModels
         {
             get
             {
-                return _biBlClient.MostCallingToServiceCenter();
-            }
-        }
-
-        public models.Client[] PotentialFriendsGroups
-        {
-            get
-            {
-                return _biBlClient.PotentialFriendsGroups();
-            }
-            set
-            {
-
+                return _biBlClient.MostCallingToServiceCenter(TOPGROUP);
             }
         }
 
@@ -48,15 +37,8 @@ namespace Cellular.BI.Client.UWP.ViewModels
         {
             get
             {
-                return _biBlClient.BestSellers();
+                return _biBlClient.BestSellers(TOPGROUP);
             }
         }
-
-
-
-
-
-
-
     }
 }

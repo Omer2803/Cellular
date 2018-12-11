@@ -19,7 +19,6 @@ namespace Cellular.CRM.BL
             container.Verify();
         }
 
-
         public T GetInstanceOf<T>() where T : class
         {
             return container.GetInstance<T>();

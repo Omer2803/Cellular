@@ -5,12 +5,8 @@ namespace Cellular.Common.CRM
 {
     public interface IClientsRepository
     {
-        Client GetClientById(int clientId);        
-
+        Client GetClientById(int clientId);  
         void AddClient(Client client);
-
-        void DeleteClient(int clientId);
-
         Client EditClient(Client client);
         List<Client> GetAllClients();
     }

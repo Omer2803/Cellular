@@ -20,16 +20,6 @@ namespace Cellular.CRM.DAL
             }
         }
 
-        public void DeleteClient(int clientId)
-        {
-            using (var db = new CellularDbContext())
-            {
-                var clientRemoved = db.Clients.FirstOrDefault(c => c.Id == clientId);
-                db.Clients.Remove(clientRemoved);
-                db.SaveChanges();
-            }
-        }
-
         public Client EditClient(Client client)
         {
             using (var db = new CellularDbContext())

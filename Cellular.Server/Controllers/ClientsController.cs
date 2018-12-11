@@ -50,21 +50,6 @@ namespace Cellular.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        //[HttpDelete]
-        public IHttpActionResult DeleteClient(int clientId)
-        {
-            try
-            {
-                _clientsManager.DeleteClient(clientId);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
         
         [HttpGet]
         [Route("GetClientDetails")]

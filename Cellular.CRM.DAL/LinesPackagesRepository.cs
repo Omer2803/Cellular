@@ -60,8 +60,6 @@ namespace Cellular.CRM.DAL
             }
         }
 
-       
-
         public List<Line> GetLinesOfClient(int clientId)
         {
             using (var db = new CellularDbContext())
