@@ -3,17 +3,20 @@ using Windows.UI.Xaml.Data;
 
 namespace Cellular.Simulator.Client.UWP.Converters
 {
-    class StringToIntConverter : IValueConverter
+    class StringToNullableIntConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return value.ToString();
+            var val = (int?)value;
+            return val.HasValue ? val.Value.ToString() : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            int.TryParse((string)value, out int i);
-            return  i;
+            if (int.TryParse(value as string, out int result))
+                return new int?(result);
+            return null;
         }
     }
 }
+

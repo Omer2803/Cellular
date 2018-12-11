@@ -18,7 +18,7 @@ namespace Cellular.Invoices.Client.UWP.Views
                 messagetbl.Text = "ID or password is incorrect";
                 messagetbl.Foreground = new SolidColorBrush(Colors.Red);
             };
-            ViewModel.TringLogin += () =>
+            ViewModel.TryingLogin += () =>
             {
                 messagetbl.Foreground = new SolidColorBrush(Colors.Black);
                 messagetbl.Text = "Please wait...";

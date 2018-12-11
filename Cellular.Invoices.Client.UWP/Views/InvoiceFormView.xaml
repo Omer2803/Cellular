@@ -5,14 +5,19 @@
     xmlns:local="using:Cellular.Invoices.Client.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Cellular.Invoices.Client.UWP.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:StringToNullableIntConverter x:Key="stringToInt"/>
+    </Page.Resources>
+    
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-            <StackPanel Visibility="{x:Bind ViewModel.IsEmployee, Mode=OneWay}">
+            <StackPanel Visibility="{x:Bind ViewModel.IsEmployee, Mode=OneTime}">
                 <TextBlock Text="Client ID:"/>
-                <TextBox Text="{x:Bind ViewModel.ClientId, Mode=TwoWay}"/>
+                <TextBox Text="{x:Bind ViewModel.ClientId, Mode=TwoWay, Converter={StaticResource stringToInt}}" PlaceholderText="Put client ID"/>
             </StackPanel>
             
             <!--<ComboBox Header="Numbers:" ItemsSource="{x:Bind ViewModel.Numbers, Mode=OneWay}"/>d-->
@@ -21,13 +26,13 @@
             <DatePicker Date="{x:Bind ViewModel.Until, Mode=TwoWay}" Header="End Date:"/>-->
 
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="Year:"/>
-                <TextBox Text="{x:Bind ViewModel.Year, Mode=TwoWay}" Margin="0,0,15,0"/>
+                <TextBlock Text="Year:"/>
+                <TextBox Text="{x:Bind ViewModel.Year, Mode=TwoWay, Converter={StaticResource stringToInt}}" Margin="0,0,15,0"/>
                 <TextBlock Text="Month:"/>
-                <ComboBox ItemsSource="{x:Bind ViewModel.Months}" SelectedItem="{x:Bind ViewModel.Month, Mode=TwoWay}"/>
+                <ComboBox ItemsSource="{x:Bind ViewModel.Months}" SelectedItem="{x:Bind ViewModel.Month, Mode=TwoWay, Converter={StaticResource stringToInt}}"/>
             </StackPanel>
 
-            <Button Content="Calculate" HorizontalAlignment="Center" Click="{x:Bind ViewModel.GetInvoice}"/>
+            <Button Content="Calculate" HorizontalAlignment="Center" Click="{x:Bind ViewModel.GetInvoice}" IsEnabled="{x:Bind ViewModel.CanGetInvoice, Mode=OneWay}"/>
         </StackPanel>
     </Grid>
 </Page>

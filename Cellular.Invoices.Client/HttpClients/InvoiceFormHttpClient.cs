@@ -23,12 +23,12 @@ namespace Cellular.Invoices.Client.HttpClients
             }
         }
 
-        public async Task<Invoice> GetInvoice(int clientId, DateTime from, DateTime until)
+        public async Task<Invoice> GetInvoice(int clientId, int year, int month)
         {
             using (var client = new HttpClient { BaseAddress = uri })
             {
                 var response = await client.PostAsJsonAsync($"api/invoices/get",
-                    new GetInvoiceModel { ClientId = clientId, From = from, Until = until });
+                    new GetInvoiceModel { ClientId = clientId, Year = year, Month = month });
 
                 if (response.IsSuccessStatusCode)
                     return await response.Content.ReadAsAsync<Invoice>();

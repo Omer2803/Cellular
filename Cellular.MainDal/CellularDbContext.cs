@@ -32,8 +32,17 @@ namespace Cellular.MainDal
                 .WithMany()
                 .HasForeignKey(c => c.RegisteredBy);
 
-            clients.Property(c => c.Id)
-            .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            clients
+                .Property(c => c.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            clients
+                .Property(c => c.FirstName)
+                .IsRequired();
+
+            clients
+                .Property(c => c.LastName)
+                .IsRequired();
 
             modelBuilder.Entity<Employee>()
                 .HasKey(e => e.Id)

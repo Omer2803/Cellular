@@ -10,8 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <converters:StringToIntConverter x:Key="strToInt"/>
-        <converters:StringToDoubleConverter x:Key="strToDbl"/>
+        <converters:StringToNullableIntConverter x:Key="stringToNumber"/>
     </Page.Resources>
     
     <Grid>
@@ -24,7 +23,7 @@
 
             <TextBlock Text="Client ID"/>
             <TextBox PlaceholderText="Put a client ID" 
-                     Text="{x:Bind ViewModel.ClientId, Mode=TwoWay, Converter={StaticResource ResourceKey=strToInt}}"/>
+                     Text="{x:Bind ViewModel.ClientId, Mode=TwoWay, Converter={StaticResource ResourceKey=stringToNumber}}"/>
 
             <ComboBox Header="Line number"
                       PlaceholderText="Select a number"
@@ -33,14 +32,14 @@
 
             <StackPanel Visibility="{x:Bind ViewModel.IsCall, Mode=OneWay}">
                 <TextBlock Text="Max duration minuets"/>
-                <TextBox Text="{x:Bind ViewModel.MaxDuration, Mode=TwoWay, Converter={StaticResource ResourceKey=strToDbl}}" />
+                <TextBox Text="{x:Bind ViewModel.MaxDuration, Mode=TwoWay, Converter={StaticResource ResourceKey=stringToNumber}}" />
 
                 <TextBlock Text="Min duration minuets"/>
-                <TextBox Text="{x:Bind ViewModel.MinDuration, Mode=TwoWay, Converter={StaticResource ResourceKey=strToDbl}}"/>
+                <TextBox Text="{x:Bind ViewModel.MinDuration, Mode=TwoWay, Converter={StaticResource ResourceKey=stringToNumber}}"/>
             </StackPanel>
 
             <TextBlock Text="Amount of simulations:"/>
-            <TextBox Text="{x:Bind ViewModel.Simulations, Mode=TwoWay, Converter={StaticResource ResourceKey=strToInt}}"/>
+            <TextBox Text="{x:Bind ViewModel.Simulations, Mode=TwoWay, Converter={StaticResource ResourceKey=stringToNumber}}"/>
 
             <ComboBox Header="Send To" 
                       ItemsSource="{x:Bind ViewModel.SendToOptions}"

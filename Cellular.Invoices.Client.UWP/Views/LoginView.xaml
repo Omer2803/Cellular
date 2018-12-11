@@ -6,19 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:VMs="using:Cellular.Invoices.Client.ViewModels"
+    xmlns:converters="using:Cellular.Invoices.Client.UWP.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <!--<Page.DataContext>
+    <!--
+    <Page.DataContext>
         <VMs:LoginViewModel x:Name="ViewModel"/>
-    </Page.DataContext>-->
-    
+    </Page.DataContext>
+    -->
+    <Page.Resources>
+        <converters:StringToNullableIntConverter x:Key="stringToInt"/>
+    </Page.Resources>
+
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-            <TextBlock Text="Welcome To The Invoices Service"/>
-            <TextBox PlaceholderText="ID" Text="{x:Bind ViewModel.Id, Mode=TwoWay}"/>
+            <TextBlock Text="Welcome To The Invoices Service" FontWeight="Bold"/>
+            <TextBox PlaceholderText="ID" Text="{x:Bind ViewModel.Id, Mode=TwoWay, Converter={StaticResource stringToInt}}"/>
             <TextBox PlaceholderText="Password" Text="{x:Bind ViewModel.Password, Mode=TwoWay}"/>
-            <Button Content="Lon in" HorizontalAlignment="Center" Click="{x:Bind ViewModel.TryLogin}"/>
+            <Button Content="Lon in" HorizontalAlignment="Center" Click="{x:Bind ViewModel.TryLogin}" IsEnabled="{x:Bind ViewModel.CanTryLogin, Mode=OneWay}"/>
             <TextBlock HorizontalAlignment="Center" x:Name="messagetbl"/>
         </StackPanel>
     </Grid>

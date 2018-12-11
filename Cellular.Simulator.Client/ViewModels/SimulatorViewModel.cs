@@ -2,6 +2,8 @@
 using Cellular.Simulator.Client.HttpClients;
 using System;
 using System.ComponentModel;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -21,8 +23,8 @@ namespace Cellular.Simulator.Client.ViewModels
             isSMS = false;
         }
 
-        private int clientId;
-        public int ClientId
+        private int? clientId;
+        public int? ClientId
         {
             get => clientId;
             set
@@ -31,12 +33,11 @@ namespace Cellular.Simulator.Client.ViewModels
                 Notify();
             }
         }
-        private async void SetClientId(int value)
+        private async void SetClientId(int? value)
         {
             clientId = value;
-            var result = await httpClient.NumbersOf(value);
-            if (result != null) Numbers = result;
-            else ServiceNotAvilable?.Invoke();
+            var result = value.HasValue ? await httpClient.NumbersOf(value.Value) : null;
+            Numbers = result ?? new string[0];
         }
 
         private string[] numbers;
@@ -86,8 +87,8 @@ namespace Cellular.Simulator.Client.ViewModels
             }
         }
 
-        private double minDuration;
-        public double MinDuration
+        private int? minDuration;
+        public int? MinDuration
         {
             get => minDuration;
             set
@@ -96,10 +97,11 @@ namespace Cellular.Simulator.Client.ViewModels
                 Notify();
             }
         }
-        private double maxDuration;
-        public double MaxDuration
+        private int? maxDuration;
+        public int? MaxDuration
         {
-            get => maxDuration; set
+            get => maxDuration;
+            set
             {
                 maxDuration = value;
                 Notify();
@@ -120,47 +122,45 @@ namespace Cellular.Simulator.Client.ViewModels
 
         public string[] SendToOptions { get; }
 
-        private int simulations;
-        public int Simulations
+        private int? simulations;
+        public int? Simulations
         {
-            get => simulations; set
+            get => simulations;
+            set
             {
                 simulations = value;
                 Notify();
             }
         }
 
+        /// <summary>
+        /// Statrs the the process of simulating calls or SMSes.
+        /// </summary>
+        /// <returns></returns>
         public async Task Simulate()
         {
             if (!CanSimulate) return;
-            try
+            switch (isCall)
             {
-                switch (isCall)
-                {
-                    case true:
-                        await httpClient.SimulateCalls(new SimulatorCalls
-                        {
-                            CallerNumber = SelectedNumber,
-                            DestinationOption = sendTo,
-                            MinDuration = TimeSpan.FromMinutes(MinDuration),
-                            MaxDuration = TimeSpan.FromMinutes(MaxDuration),
-                            Simulations = Simulations
-                        });
-                        return;
-                    case false:
-                        await httpClient.SimulateSMSes(new SimulatorSMSes
-                        {
-                            SenderNumber = SelectedNumber,
-                            DestinationOption = sendTo,
-                            Simulations = Simulations
-                        });
-                        return;
-                    default: throw new Exception();
-                }
-            }
-            catch (Exception e)
-            {
-                ServiceNotAvilable?.Invoke();
+                case true:
+                    await httpClient.SimulateCalls(new SimulatorCalls
+                    {
+                        CallerNumber = SelectedNumber,
+                        DestinationOption = sendTo,
+                        MinDuration = TimeSpan.FromMinutes(MinDuration.Value),
+                        MaxDuration = TimeSpan.FromMinutes(MaxDuration.Value),
+                        Simulations = Simulations.Value
+                    });
+                    return;
+                case false:
+                    await httpClient.SimulateSMSes(new SimulatorSMSes
+                    {
+                        SenderNumber = SelectedNumber,
+                        DestinationOption = sendTo,
+                        Simulations = Simulations.Value
+                    });
+                    return;
+                default: throw new Exception();
             }
         }
 
@@ -168,11 +168,12 @@ namespace Cellular.Simulator.Client.ViewModels
         {
             get
             {
-                return SelectedNumber != null
+                return
+                    SelectedNumber != null
                     && sendTo != 0
-                    && clientId != 0
-                    && simulations > 0
-                    && (isCall ? (minDuration > 0 && maxDuration > minDuration) : true);
+                    && clientId.HasValue && clientId != 0
+                    && simulations.HasValue && simulations > 0
+                    && (isCall ? minDuration.HasValue && maxDuration.HasValue && minDuration > 0 && maxDuration >= minDuration : true);
             }
         }
 
@@ -182,7 +183,5 @@ namespace Cellular.Simulator.Client.ViewModels
             if (propertyName != nameof(CanSimulate)) Notify(nameof(CanSimulate));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public event Action ServiceNotAvilable;
     }
 }

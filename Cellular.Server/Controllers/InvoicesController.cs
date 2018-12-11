@@ -42,7 +42,7 @@ namespace Cellular.Server.Controllers
         {
             try
             {
-                var result = invoicesProducer.CreateInvoice(model.ClientId, model.From, model.Until);
+                var result = invoicesProducer.CreateInvoice(model.ClientId, model.Year, model.Month);
                 return Json(result);
             }
             catch (Exception e)

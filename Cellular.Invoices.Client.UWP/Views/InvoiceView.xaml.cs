@@ -1,5 +1,4 @@
 ﻿using Cellular.Common.Invoices.Models;
-using Cellular.Invoices.Client.ViewModels;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -7,8 +6,6 @@ namespace Cellular.Invoices.Client.UWP.Views
 {
     public sealed partial class InvoiceView : Page
     {
-        public InvoiceViewModel ViewModel { get; set; }
-
         public InvoiceView()
         {
             this.InitializeComponent();

@@ -1,34 +1,70 @@
 ﻿using Cellular.Common.Invoices.Models;
 using Cellular.Invoices.Client.HttpClients;
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Cellular.Invoices.Client.ViewModels
 {
-    public class LoginViewModel
+    public class LoginViewModel : INotifyPropertyChanged
     {
         private readonly LoginHttpClient httpClient = new LoginHttpClient();
 
-        public string Password { get; set; }
+        private int? id;
+        public int? Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                Notify();
+                Notify(nameof(CanTryLogin));
+            }
+        }
 
-        public int Id { get; set; }
+        private string password;
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                Notify();
+                Notify(nameof(CanTryLogin));
+            }
+        }
 
-        private bool canTryLogin = true;
+        public bool CanTryLogin
+        {
+            get
+            {
+                return
+                    id.HasValue
+                    && !string.IsNullOrEmpty(password)
+                    && !isTryingLogin;
+            }
+        }
+
+        private bool isTryingLogin = false;
 
         public async Task TryLogin()
         {
-            if (canTryLogin)
+            if (CanTryLogin)
             {
-                canTryLogin = false;
-                TringLogin?.Invoke();
-                var result = await httpClient.TryLogin(Id, Password);
-                if (result != null 
+                isTryingLogin = true;
+                TryingLogin?.Invoke();
+                var result = await httpClient.TryLogin(Id.Value, Password);
+
+                if (result != null
                     && (result.ResultType == LoginResultEnum.Client
                     || result.ResultType == LoginResultEnum.Employee))
+                {
                     Logedin?.Invoke(result.Result);
+                }
                 else
                 {
-                    canTryLogin = true;
+                    isTryingLogin = false;
                     LoginFailed?.Invoke();
                 }
             }
@@ -36,6 +72,12 @@ namespace Cellular.Invoices.Client.ViewModels
 
         public event Action<object> Logedin;
         public event Action LoginFailed;
-        public event Action TringLogin;
+        public event Action TryingLogin;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void Notify([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

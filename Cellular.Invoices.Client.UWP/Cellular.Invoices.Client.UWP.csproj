@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateTimeToShortStringConverter.cs" />
+    <Compile Include="Converters\StringToNullableIntConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\InvoiceFormView.xaml.cs">
       <DependentUpon>InvoiceFormView.xaml</DependentUpon>

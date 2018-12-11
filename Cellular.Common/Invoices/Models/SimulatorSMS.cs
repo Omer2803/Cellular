@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cellular.Common.Invoices.Models
+﻿namespace Cellular.Common.Invoices.Models
 {
+    /// <summary>
+    ///  Serves as a DTO to be sent from a client side to a server, which
+    ///  encapsulates needed data for starting the process of SMSes simulation. 
+    /// </summary>
     public class SimulatorSMSes
     {
         public string SenderNumber { get; set; }

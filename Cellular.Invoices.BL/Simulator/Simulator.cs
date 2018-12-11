@@ -16,7 +16,7 @@ namespace Cellular.Invoices.BL.Simulator
 
         public void SimulateCalls(SimulatorCalls calls)
         {
-            string[] dests = repository.GetRandomNumbersFor(calls.CallerNumber, calls.DestinationOption, calls.Simulations);
+            string[] destinations = repository.GetRandomNumbersFor(calls.CallerNumber, calls.DestinationOption, calls.Simulations);
 
             Random rand = new Random();
 
@@ -30,7 +30,7 @@ namespace Cellular.Invoices.BL.Simulator
                 repository.AddCall(new Call
                 {
                     CallerNumber = calls.CallerNumber,
-                    DestinationNumber = dests[i],
+                    DestinationNumber = destinations[i],
                     Duration = TimeSpan.FromMinutes((rand.Next() / (double)int.MaxValue) * rangeLength + minDur),
                     StartTime = time
                 });
@@ -41,7 +41,7 @@ namespace Cellular.Invoices.BL.Simulator
 
         public void SimulateSMSes(SimulatorSMSes smses)
         {
-            string[] dests = repository.GetRandomNumbersFor(smses.SenderNumber, smses.DestinationOption, smses.Simulations);
+            string[] destinations = repository.GetRandomNumbersFor(smses.SenderNumber, smses.DestinationOption, smses.Simulations);
 
             var time = DateTime.Now;
 
@@ -50,7 +50,7 @@ namespace Cellular.Invoices.BL.Simulator
                 repository.AddSMS(new SMS
                 {
                     SenderNumber = smses.SenderNumber,
-                    DestinationNumber = dests[i],
+                    DestinationNumber = destinations[i],
                     SendingTime = time
                 });
 

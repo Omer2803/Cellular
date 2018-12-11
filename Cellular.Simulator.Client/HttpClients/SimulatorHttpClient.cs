@@ -30,7 +30,7 @@ namespace Cellular.Simulator.Client.HttpClients
                 var response = await client.PostAsJsonAsync($"api/simulator/SimulateCalls", calls);
 
                 if (!response.IsSuccessStatusCode)
-                    throw new Exception("Could not post the call");
+                    throw new Exception("Could not post the calls. ");
             }
         }
 
@@ -41,7 +41,7 @@ namespace Cellular.Simulator.Client.HttpClients
                 var response = await client.PostAsJsonAsync($"api/simulator/SimulateSMSes", smses);
 
                 if (!response.IsSuccessStatusCode)
-                    throw new Exception("Could not post the SMS. ");
+                    throw new Exception("Could not post the SMSes. ");
             }
         }
     }
