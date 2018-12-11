@@ -21,8 +21,8 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             this._page = page;
             _crmBlClient = new CrmBlClient();
         }
-        private int _id;
 
+        private int _id;
         public int Id
         {
             get { return _id; }
@@ -30,7 +30,6 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         }
 
         private string _password;
-
         public string Password
         {
             get { return _password; }
@@ -38,7 +37,6 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         }
 
         private string _error;
-
         public string Error
         {
             get { return _error; }
@@ -51,18 +49,31 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        /// <summary>
+        /// Login employee according to his password and ID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Login(object sender, RoutedEventArgs e)
         {
-            var loginEmployee = _crmBlClient.LoginEmployee(Id, Password);
-            if (loginEmployee != null)
+            try
             {
-                _page.Frame.Navigate(typeof(ClientsView), Id);
+                var loginEmployee = _crmBlClient.LoginEmployee(Id, Password);
+                if (loginEmployee != null)
+                {
+                    _page.Frame.Navigate(typeof(ClientsView), Id);
+                }
+                else
+                {
+                    Error = "The username or the password isn't correct";
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                Error = "The username or the password isn't correct";
+                Error = ex.Message;
             }
+            
         }
     }
 }

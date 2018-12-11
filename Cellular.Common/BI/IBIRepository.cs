@@ -6,12 +6,11 @@ namespace Cellular.Common.BI
 {
     public interface IBIRepository
     {
-        List<MostValue> MostProfitableClients();
+        List<MostValue> MostProfitableClients(int count);
 
-        MostCallingToCenter[] MostCallingToServiceCenter();
+        MostCallingToCenter[] MostCallingToServiceCenter(int count);
 
-        BestSeller[] BestSellers();
+        BestSeller[] BestSellers(int count);
 
-        Client[] PotentialFriendsGroups();
     }
 }

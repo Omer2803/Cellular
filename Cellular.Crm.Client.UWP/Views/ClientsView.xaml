@@ -21,11 +21,10 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
-        <Button Content="Add" Click="{x:Bind ClientsViewModel.NavigateToAddClientView}">
-        </Button>
-        <Button Content="Edit details" Click="{x:Bind ClientsViewModel.NavigateToEditClientView}"/>
+        <Button Content="Add client" Click="{x:Bind ClientsViewModel.NavigateToAddClientView}"/>
+        <Button Content="Edit client details" Click="{x:Bind ClientsViewModel.NavigateToEditClientView}"/>
         <Button Content="Add line" Click="{x:Bind ClientsViewModel.NavigateToAddLineView}"/>
+        <Button Content="Edit line" Click="{x:Bind ClientsViewModel.NavigateToEditLineView}"/>
     </StackPanel>
 
 </Page>

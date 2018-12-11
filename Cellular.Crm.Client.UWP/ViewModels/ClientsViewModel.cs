@@ -16,7 +16,8 @@ namespace Cellular.CRM.Client.UWP.ViewModels
     {
         private Page _page;
         private CrmBlClient _crmBlClient;
-
+        private bool isEditLine;
+        private bool isAddLine;
         public ClientsViewModel(Page page)
         {
             _page = page;
@@ -74,14 +75,23 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         {
             if (ClientSelected != null)
             {
-                _page.Frame.Navigate(typeof(AddLineView), ClientSelected.Id);
+                isEditLine = false;
+                isAddLine = !isEditLine;
+                _page.Frame.Navigate(typeof(LineView),Tuple.Create(ClientSelected.Id, isEditLine,isAddLine));
 
             }
 
         }
 
+        public void NavigateToEditLineView(object sender, RoutedEventArgs e)
+        {
+            if (ClientSelected != null)
+            {
+                isEditLine = true;
+                isAddLine = !isEditLine;
+                _page.Frame.Navigate(typeof(LineView), Tuple.Create(ClientSelected.Id,isEditLine, isAddLine));
 
-
-
+            }
+        }
     }
 }

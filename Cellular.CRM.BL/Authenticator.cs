@@ -16,20 +16,12 @@ namespace Cellular.CRM.BL
         {
             this._loginDal = loginDal;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+       
         public Employee Login(int Id, string password)
         {
             return _loginDal.Login(Id, password);
         }
 
-        public void Logout(int employeeId)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

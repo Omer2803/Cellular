@@ -20,11 +20,11 @@ namespace Cellular.Server.Controllers
 
         [HttpGet]
         [Route("GetBestSellers")]
-        public IHttpActionResult GetBestSellers()
+        public IHttpActionResult GetBestSellers(int count)
         {
             try
             {
-               var employees =  _bIStatistics.BestSellers();
+               var employees =  _bIStatistics.BestSellers(count);
                 return Ok(employees);
             }
             catch (Exception ex)
@@ -35,11 +35,11 @@ namespace Cellular.Server.Controllers
 
         [HttpGet]
         [Route("GetMostCallingToServiceCenter")]
-        public IHttpActionResult GetMostCallingToServiceCenter()
+        public IHttpActionResult GetMostCallingToServiceCenter(int count)
         {
             try
             {
-                var clients = _bIStatistics.MostCallingToServiceCenter();
+                var clients = _bIStatistics.MostCallingToServiceCenter(count);
                 return Ok(clients);
             }
             catch (Exception ex)
@@ -50,11 +50,11 @@ namespace Cellular.Server.Controllers
 
         [HttpGet]
         [Route("GetMostProfitableClients")]
-        public IHttpActionResult GetMostProfitableClients()
+        public IHttpActionResult GetMostProfitableClients(int count)
         {
             try
             {
-                var clients = _bIStatistics.MostProfitableClients();
+                var clients = _bIStatistics.MostProfitableClients(count);
                 return Ok(clients);
             }
             catch (Exception ex)
@@ -63,19 +63,6 @@ namespace Cellular.Server.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetPotentialFriendsGroups")]
-        public IHttpActionResult GetPotentialFriendsGroups()
-        {
-            try
-            {
-                var clients = _bIStatistics.PotentialFriendsGroups();
-                return Ok(clients);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+       
     }
 }

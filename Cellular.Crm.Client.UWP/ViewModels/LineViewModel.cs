@@ -12,14 +12,34 @@ using Windows.UI.Xaml.Controls;
 
 namespace Cellular.CRM.Client.UWP.ViewModels
 {
-    public class AddLineViewModel : INotifyPropertyChanged
+    public class LineViewModel : INotifyPropertyChanged
     {
         private readonly Page _page;
         private CrmBlClient _crmBlClient;
-        public event PropertyChangedEventHandler PropertyChanged;
-        public int ClientId { get; set; }
+        private const int FRIENDSPRICE = 20;
+        private readonly string LinesuccessfulMessage = "The line added successfully";
+        private readonly string packageSuccessfulMessage = "The package edited successfully";
+
+
+        private bool _isEditLine;
+        public bool IsEditLine
+        {
+            get { return _isEditLine; }
+            set { _isEditLine = value; }
+        }
+
+        private bool _isAddLine;
+        public bool IsAddLine
+        {
+            get { return _isAddLine; }
+            set { _isAddLine = value; }
+        }
+
+
 
         #region PackageAndLineProperties
+        public event PropertyChangedEventHandler PropertyChanged;
+        public int ClientId { get; set; }
 
         private List<Line> _lines;
         public List<Line> Lines
@@ -39,7 +59,14 @@ namespace Cellular.CRM.Client.UWP.ViewModels
         public string PhoneNumber
         {
             get { return _phoneNumber; }
-            set { _phoneNumber = value; Notify(nameof(PhoneNumber)); }
+            set
+            {
+                if (isValid(value))
+                {
+                    _phoneNumber = value;
+                }
+                Notify(nameof(PhoneNumber));
+            }
         }
 
         private double _totalPrice;
@@ -55,7 +82,7 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             get { return _maxMinutes; }
             set
             {
-                if (!int.TryParse(value.ToString(), out _maxMinutes))
+                if (!int.TryParse(value.ToString(), out _maxMinutes) || _maxMinutes<0)
                 {
                     _maxMinutes = 0;
                 };
@@ -70,7 +97,7 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             get { return _maxSms; }
             set
             {
-                if (!int.TryParse(value.ToString(), out _maxSms))
+                if (!int.TryParse(value.ToString(), out _maxSms) || _maxSms<0)
                 {
                     _maxSms = 0;
                 };
@@ -136,9 +163,31 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
+        /// <summary>
+        /// Check if input is valid
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private bool isValid(string value)
+        {
+            int input;
+            if (value.Length <= 10)
+            {
+                for (int i = 0; i < value.Length; i++)
+                {
+                    if (!int.TryParse(value[i].ToString(), out input))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
         #endregion
 
-        public AddLineViewModel(Page page)
+        public LineViewModel(Page page)
         {
             this._page = page;
             _crmBlClient = new CrmBlClient();
@@ -146,24 +195,16 @@ namespace Cellular.CRM.Client.UWP.ViewModels
 
         public void AddLine(object sender, RoutedEventArgs e)
         {
-            Package package = null;
-            Line lineSelected = (Line)((Button)sender).CommandParameter;
-            if (lineSelected == null)
-            {
-                lineSelected = new Line()
-                {
-                    PhoneNumber = PhoneNumber,
-                    ClientId = ClientId
-                };
-            }
-            if (IncludesPackage)
-            {
-                package = AddPackageToLine();
-            }
             try
             {
-                _crmBlClient.AddNewLinePlusPackage(lineSelected, package);
-                InitSuccussMessage();
+                _crmBlClient.AddNewLine(PhoneNumber, ClientId);
+                // Always add line , in case of includepackage's checkbox is check
+                // Also add package
+                if (IncludesPackage)
+                {
+                    _crmBlClient.AddNewPackage(IncludesMiutes, IncludesSms, IncludesFriends, MaxMinutes, MaxSms, Number1, Number2, Number3, PhoneNumber, TotalPrice);
+                }
+                InitSuccussMessage(LinesuccessfulMessage);
                 _page.Frame.Navigate(typeof(ClientsView));
             }
             catch (Exception ex)
@@ -172,13 +213,13 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             }
 
         }
-
-        private async void InitSuccussMessage()
+        /// <summary>
+        /// If line and package added successfully.
+        /// </summary>
+        private async void InitSuccussMessage(string msg)
         {
-            MessageDialog messageDialog = new MessageDialog("The line and package added successfully");
+            MessageDialog messageDialog = new MessageDialog(msg);
             await messageDialog.ShowAsync();
-            //Lines =_crmBlClient.GetLinesByClientId(ClientId);
-
         }
 
         public void GetPackageOfLine(object sender, SelectionChangedEventArgs e)
@@ -210,19 +251,21 @@ namespace Cellular.CRM.Client.UWP.ViewModels
                 TotalPrice = package.TotalPrice;
             }
         }
-
+        /// <summary>
+        /// Set all package properties to default
+        /// </summary>
         private void SetPropertiesDefault()
         {
             IncludesFriends = default(bool);
             IncludesMiutes = default(bool);
             IncludesSms = default(bool);
             IncludesPackage = default(bool);
-            Number1 = string.Empty;
-            Number2 = string.Empty;
-            Number3 = string.Empty;
-            MaxMinutes = 0;
-            MaxSms = 0;
-            TotalPrice = 0;
+            Number1 = default(string);
+            Number2 = default(string);
+            Number3 = default(string);
+            MaxMinutes = default(int);
+            MaxSms =  default(int);
+            TotalPrice = default(int);
         }
 
         public void ClearProperties(object sender, RoutedEventArgs e)
@@ -230,42 +273,48 @@ namespace Cellular.CRM.Client.UWP.ViewModels
             SetPropertiesDefault();
         }
 
+        // Raise and decrease the total price according to friends package.
         public void RaiseFriendsPriceToTotalPrice(object sender, RoutedEventArgs e)
         {
-            TotalPrice += 20;
+            TotalPrice += FRIENDSPRICE;
         }
 
-        public void DecraseFriendsPriceToTotalPrice(object sender, RoutedEventArgs e)
+        public void DecreaseFriendsPriceToTotalPrice(object sender, RoutedEventArgs e)
         {
-            TotalPrice -= 20;
+            TotalPrice -= FRIENDSPRICE;
         }
-
-        private Package AddPackageToLine()
-        {
-            Package newPackage = new Package();
-            newPackage.Id = PackageId;
-            newPackage.IncludesMinuets = IncludesMiutes;
-            if (IncludesMiutes)
-            {
-                newPackage.MaxMinuets = MaxMinutes;
-            }
-            newPackage.IncludesSMSes = IncludesSms;
-            if (IncludesSms)
-            {
-                newPackage.MaxSMSes = MaxSms;
-            }
-            newPackage.IncludesFriends = IncludesFriends;
-            if (IncludesFriends)
-            {
-                newPackage.Number1 = Number1;
-                newPackage.Number2 = Number2;
-                newPackage.Number3 = Number3;
-            }
-            newPackage.LineNumber = PhoneNumber;
-            newPackage.TotalPrice = TotalPrice;
-            return newPackage;
-        }
-
+        /// <summary>
+        /// Add package to line
+        /// </summary>
+        /// <returns></returns>
+        //private Package AddPackageToLine()
+        //{
+        //    Package newPackage = new Package();
+        //    newPackage.Id = PackageId;
+        //    newPackage.IncludesMinuets = IncludesMiutes;
+        //    if (IncludesMiutes)
+        //    {
+        //        newPackage.MaxMinuets = MaxMinutes;
+        //    }
+        //    newPackage.IncludesSMSes = IncludesSms;
+        //    if (IncludesSms)
+        //    {
+        //        newPackage.MaxSMSes = MaxSms;
+        //    }
+        //    newPackage.IncludesFriends = IncludesFriends;
+        //    if (IncludesFriends)
+        //    {
+        //        newPackage.Number1 = Number1;
+        //        newPackage.Number2 = Number2;
+        //        newPackage.Number3 = Number3;
+        //    }
+        //    newPackage.LineNumber = PhoneNumber;
+        //    newPackage.TotalPrice = TotalPrice;
+        //    return newPackage;
+        //}
+        /// <summary>
+        /// Calculate total price according to sms bank and messages bank.
+        /// </summary>
         private void CalculateTotalPrice()
         {
             TotalPrice = 0;
@@ -282,24 +331,18 @@ namespace Cellular.CRM.Client.UWP.ViewModels
                 TotalPrice += priceSms;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void SavePackageChanges(object sender, RoutedEventArgs e)
         {
             try
             {
                 Line lineSelected = (Line)((Button)sender).CommandParameter;
-                PhoneNumber = lineSelected.PhoneNumber;
-                var packageEdited = AddPackageToLine();
-                packageEdited = _crmBlClient.SavePackageChanges(packageEdited);
-                if (packageEdited != null)
-                {
-                    InitSuccussMessage();
-                }
-                else
-                {
-                    Error = "Cannot update this package";
-                }
-
+                _crmBlClient.UpdatePackageChanges(PackageId,IncludesMiutes, IncludesSms, IncludesFriends, MaxMinutes, MaxSms, Number1, Number2, Number3, PhoneNumber, TotalPrice);
+                InitSuccussMessage(packageSuccessfulMessage);
             }
             catch (Exception ex)
             {
